@@ -8,6 +8,7 @@ import { useContext, useRef } from 'react';
 import { MyContext } from './CustomContext';
 import MobileNav from './components/MobileNav/MobileNav';
 import AddNewsApp from './pages/addnews/addnews'; // ✅ Correct import
+import Login from './pages/login/login';
 
 function App() {
   const myContext = useContext(MyContext);
@@ -49,7 +50,7 @@ function App() {
             <Route path={'/en/:category'} element={<News />} />
             <Route path={'/hi/:category'} element={<News />} />
             <Route path={'/en/addnews'} element={<AddNewsApp />} />
-            <Route path={'/en/login'} element={<div>Login</div>} /> {/* ✅ AddNews Route */}
+            <Route path={'/en/login'} element={<Login/>} /> {/* ✅ AddNews Route */}
             <Route path={'*'} element={<News />} />
           </Routes>
         </Slider>
@@ -61,7 +62,7 @@ function App() {
             <Route path={'/en/:category'} element={<News />} />
             <Route path={'/hi/:category'} element={<News />} />
             <Route path={'/en/addnews'} element={<AddNewsApp />} /> {/* ✅ AddNews Route */}
-            <Route path={'/en/login'} element={<div>Login</div>} />
+            <Route path={'/en/login'} element={<Login/>} />
             <Route path={'*'} element={<News />} />
           </Routes>
           <Footer />

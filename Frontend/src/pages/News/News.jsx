@@ -12,25 +12,24 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import Spinner from "../../components/Spinner/Spinner";
 
-const validQuaries = ["general", "national", "international", "business", "entertainment", "health", "science", "sports", "technology", "bookmarks"];
+const validQueries = ["general", "national", "international", "business", "entertainment", "health", "science", "sports", "technology", "bookmarks"];
 let totalArticles;
-let pageNum;
+let pageNum = 1;
 
 let timeOut;
-// get apikey from https://gnews.io/
-// let apiKey = "aa9c04bf0f87a6cb98e5baa034ac6998";
-const apiKeys = ["4726ae9cdfa04f6b8d5a5726f15541b3"];
-    let apiKeyIndex = 0;
+const apiKeys = ["98fde2a504644a46bcef0ffa683bcd55"];
+let apiKeyIndex = 0;
 // Your backend URL to fetch custom news
 const CUSTOM_NEWS_API = "http://localhost:5000"; // Change this to your actual backend base URL
 
 const News = () => {
     const [displayLoadMore, setDisplayLoadMore] = useState(true);
     const [loader, setLoader] = useState(true);
-    const [lodingBtn, setLodingBtn] = useState(false);
+    const [loadingBtn, setLoadingBtn] = useState(false);
     const [networkErr, setNetworkErr] = useState(false);
     const [bookmarkMsg, setBookmarkMsg] = useState("News Bookmarked");
     const [displayBookmarkMsg, setDisplayBookmarkMsg] = useState(false);
+    
 
     const bookmarkMsgHandler = (message) => {
         setBookmarkMsg(message);
@@ -49,62 +48,39 @@ const News = () => {
     const params = useParams();
     let category = params.category;
 
-    if (category == "national" || category == "international") {
+    if (category === "national" || category === "international") {
         category = "general";
     }
 
-    const apiCall = async () => {
-        setLoader(true);
+    const apiCall = async (page = 1, append = false) => {
+        if (!append) {
+            setLoader(true);
+        } else {
+            setLoadingBtn(true);
+        }
         setNetworkErr(false);
         
         try {
-            // 1. Fetch news from the GNews API
+            // 1. Fetch news from the NewsAPI
             let result;
             try {
-                result = await axios.get(`https://newsapi.org/v2/top-headlines?category=${category}&page=${pageNum}&pageSize=10&language=${language}&country=${params.category === "national" ? "in" : "us"}&apiKey=${apiKeys[apiKeyIndex]}`);
-            console.log(result.data)}
-            // catch (err) {
-            //     // Fallback API keys logic
-            //     console.log("expired 1st apikey");
-                // try {
-                //     apiKey = "239eafb61b40e1419a2bcd08e20492f7";
-                //     result = await axios.get(`https://gnews.io/api/v4/top-headlines?category=${category}&page=${pageNum}&lang=${language}&country=${params.category == "national" ? 'in' : 'any'}&max=10&apikey=${apiKey}`);
-                // }
-                // catch (err2) {
-                //     console.log("expired 2nd apikey");
-                //     try {
-                //         apiKey = "743d722dd292a77769e54e8d6aeb5475";
-                //         result = await axios.get(`https://gnews.io/api/v4/top-headlines?category=${category}&page=${pageNum}&lang=${language}&country=${params.category == "national" ? 'in' : 'any'}&max=10&apikey=${apiKey}`);
-                //     }
-                //     catch (err3) {
-                //         console.log("expired 3rd apikey");
-                //         try {
-                //             apiKey = "606ac7501ef2bd39836d80bceb5f32ec";
-                //             result = await axios.get(`https://gnews.io/api/v4/top-headlines?category=${category}&page=${pageNum}&lang=${language}&country=${params.category == "national" ? 'in' : 'any'}&max=10&apikey=${apiKey}`);
-                //         }
-                //         catch (err4) {
-                //             console.log("expired 4th apikey");
-                //             try {
-                //                 apiKey = "611a1fcfe8a977c10b329207423901ff";
-                //                 result = await axios.get(`https://gnews.io/api/v4/top-headlines?category=${category}&page=${pageNum}&lang=${language}&country=${params.category == "national" ? 'in' : 'any'}&max=10&apikey=${apiKey}`);
-                //             }
-                            catch (err5) {
-                                console.log("expired 5th apikey");
-                                if (err5.message === "Network Error") {
-                                    setNetworkErr(true);
-                                    setLoader(false);
-                                    return;
-                                }
-                                // If all API keys fail, set empty result
-                                result = { data: { articles: [], totalArticles: 0 } };
-                            }
-                        
-                    
-                
+                result = await axios.get(`https://newsapi.org/v2/top-headlines?category=${category}&page=${page}&pageSize=10&language=${language}&country=${params.category === "national" ? "in" : "us"}&apiKey=${apiKeys[apiKeyIndex]}`);
+                console.log(result.data);
+            } catch (err) {
+                console.log("Error with API key:", err);
+                if (err.message === "Network Error") {
+                    setNetworkErr(true);
+                    setLoader(false);
+                    setLoadingBtn(false);
+                    return;
+                }
+                // If API key fails, set empty result
+                result = { data: { articles: [], totalResults: 0 } };
+            }
 
             let apiArticles = result.data.articles || [];
             let finalArticles = apiArticles;
-            totalArticles = result.data.totalArticles || 0;
+            totalArticles = result.data.totalResults || 0;
 
             // 2. Try to fetch custom news from your backend based on category
             try {
@@ -125,8 +101,8 @@ const News = () => {
                             url: article.url || '#',
                             // Ensure the image is properly formatted
                             image: article.image && !article.image.startsWith("http")
-                            ? `${CUSTOM_NEWS_API}${article.image.trim()}`  // Convert relative to absolute
-                            : article.image || '/default-image.jpg', // Fallback image
+                                ? `${CUSTOM_NEWS_API}${article.image.trim()}`  // Convert relative to absolute
+                                : article.image || '/default-image.jpg', // Fallback image
                             publishedAt: article.publishedAt || article.createdAt || new Date().toISOString(),
                             source: {
                                 name: article.source?.name || article.by || 'Custom News',
@@ -136,9 +112,14 @@ const News = () => {
                         };
                     });
                     
-                    
-                    finalArticles = [...apiArticles, ...formattedCustomArticles];
-                    totalArticles += formattedCustomArticles.length;
+                    if (append) {
+                        // For load more, we only need to append the API articles, since custom news is already loaded
+                        finalArticles = apiArticles;
+                    } else {
+                        // For initial load, combine API and custom articles
+                        finalArticles = [...apiArticles, ...formattedCustomArticles];
+                        totalArticles += formattedCustomArticles.length;
+                    }
                 }
             } catch (customErr) {
                 console.log("No custom news available or error fetching them:", customErr);
@@ -147,28 +128,37 @@ const News = () => {
             }
             
             // Set the articles (either just API or combined with custom)
-            setArticles(finalArticles);
+            if (append) {
+                setArticles(prevArticles => [...prevArticles, ...finalArticles]);
+            } else {
+                setArticles(finalArticles);
+            }
             
-            if (pageNum * 10 >= totalArticles) {
+            if (page * 10 >= totalArticles) {
                 setDisplayLoadMore(false);
+            } else {
+                setDisplayLoadMore(true);
             }
             
             setLoader(false);
+            setLoadingBtn(false);
         } catch (err) {
             console.error("Error fetching news:", err);
             setNetworkErr(true);
             setLoader(false);
+            setLoadingBtn(false);
         }
     }
 
     useEffect(() => {
         setDisplayLoadMore(true);
+        pageNum = 1; // Reset page number when category or language changes
         
-        if (params.category == undefined || !validQuaries.includes(params.category)) {
+        if (params.category === undefined || !validQueries.includes(params.category)) {
             navigate(`/${language}/general`);
         }
-        else if (params.category == 'bookmarks') {
-            const bookmarksArticle = language == 'hi' ? hindiBookmarkArticles : englishBookmarkArticles;
+        else if (params.category === 'bookmarks') {
+            const bookmarksArticle = language === 'hi' ? hindiBookmarkArticles : englishBookmarkArticles;
             setLoader(true);
             setNetworkErr(false);
             setDisplayLoadMore(false);
@@ -182,42 +172,27 @@ const News = () => {
             setCurrPath(params.category);
         }
         else {
-            pageNum = 1;
-            apiCall();
-            document.title = (params.category == "general" ? "TOP HEADLINES" : params.category.toLocaleUpperCase()) + " NEWS || INSHORTS CLONE";
+            apiCall(1, false);
+            document.title = (params.category === "general" ? "TOP HEADLINES" : params.category.toLocaleUpperCase()) + " NEWS || INSHORTS CLONE";
             setCurrPath(params.category);
         }
         window.scrollTo(0, 0);
         setHideHeader(false);
 
-    }, [params.category, language])
+    }, [params.category, language]);
 
-    const loadMoreArticles = async () => {
-        setLodingBtn(true);
+    const loadMoreArticles = () => {
         pageNum += 1;
-        
-        try {
-            // Just load more from GNews API
-            let result;
-            try {
-                result = await axios.get(`https://newsapi.org/v2/top-headlines?category=${category}&page=${pageNum}&pageSize=10&language=${language}&country=${params.category === "national" ? "in" : "us"}&apiKey=${apiKeys[apiKeyIndex]}`);
-            } catch (err) {
-                console.log("apikey validity expired");
-                result = { data: { articles: [] } };
-            }
-            
-            const newApiArticles = result.data.articles || [];
-            setArticles([...articles, ...newApiArticles]);
-            
-            if (pageNum * 10 >= totalArticles) {
-                setDisplayLoadMore(false);
-            }
-        } catch (error) {
-            console.error("Error loading more articles:", error);
-        }
-        
-        setLodingBtn(false);
+        apiCall(pageNum, true);
     }
+
+    // For mobile: Handle loading more slides when user reaches the end of current slides
+    const handleAfterChange = (currentSlide) => {
+        // If we're near the end of the available slides, load more
+        if (isMobileDevice && currentSlide >= articles.length - 2 && !loadingBtn && displayLoadMore) {
+            loadMoreArticles();
+        }
+    };
 
     const slideScrollHandler = (oldIndex, newIndex) => {
         if (oldIndex > newIndex) {
@@ -237,6 +212,7 @@ const News = () => {
         slidesToShow: 1,
         slidesToScroll: 1,
         beforeChange: slideScrollHandler,
+        afterChange: handleAfterChange
     }
 
     return (
@@ -245,12 +221,12 @@ const News = () => {
             {
                 loader ? <Spinner />
                     :
-                    networkErr ? <span className="network-err">{language == 'hi' ? 'अपना इंटरनेट कनेक्शन जांचें और पुनः प्रयास करें।' : 'Check your internet connection and try again.'}</span>
+                    networkErr ? <span className="network-err">{language === 'hi' ? 'अपना इंटरनेट कनेक्शन जांचें और पुनः प्रयास करें।' : 'Check your internet connection and try again.'}</span>
                         :
-                        articles.length == 0 ?
+                        articles.length === 0 ?
                             <div className="bookmarks-err">
-                                <p>{language == 'hi' ? 'कोई बुकमार्क समाचार उपलब्ध नहीं हैं' : 'No bookmark news are available'}</p>
-                                <Link to={`${language}/general`}>Load News</Link>
+                                <p>{language === 'hi' ? 'कोई बुकमार्क समाचार उपलब्ध नहीं हैं' : 'No bookmark news are available'}</p>
+                                <Link to={`/${language}/general`}>Load News</Link>
                             </div>
                             :
                             isMobileDevice ?
@@ -262,7 +238,7 @@ const News = () => {
                                             })
                                         }
                                     </Slider>
-
+                                    {loadingBtn && <div className="mobile-loader"><Spinner /></div>}
                                     <span className={`bookmark-message ${displayBookmarkMsg && 'd-item'}`}>{bookmarkMsg}</span>
                                 </>
                                 :
@@ -270,15 +246,17 @@ const News = () => {
                                     <div className="articles">
                                         {
                                             articles.map((article, index) => {
-                                                return <NewsArticle key={index} article={article} />
+                                                return <NewsArticle key={index} article={article} bookmarkMsgHandler={bookmarkMsgHandler} />
                                             })
                                         }
                                     </div>
 
                                     {
-                                        lodingBtn ? <Spinner />
+                                        loadingBtn ? <Spinner />
                                             :
-                                            displayLoadMore && <button className="load-more" onClick={loadMoreArticles}>Load More</button>
+                                            displayLoadMore && <button className="load-more" onClick={loadMoreArticles}>
+                                                {language === 'hi' ? 'और समाचार लोड करें' : 'Load More News'}
+                                            </button>
                                     }
                                 </>
             }
