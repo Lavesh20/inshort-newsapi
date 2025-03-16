@@ -62,6 +62,9 @@ const Navbar = ({ displayNavbar, setDisplayNavbar }) => {
             <div className="admin-login">
                 <NavLink to="/en/login" onClick={categoryClicked}>Admin Login</NavLink>
             </div>
+            <div className="admin-login">
+                <NavLink to="/en/blog" onClick={categoryClicked}>MyBlog</NavLink>
+            </div>
         </div>
     );
 };
