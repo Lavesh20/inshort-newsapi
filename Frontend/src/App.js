@@ -9,6 +9,13 @@ import { MyContext } from './CustomContext';
 import MobileNav from './components/MobileNav/MobileNav';
 import AddNewsApp from './pages/addnews/addnews'; // ✅ Correct import
 import Login from './pages/login/login';
+import Blog from './pages/blog/[id]/blog';
+import Home from './pages/blogpage/BlogPage';
+import BlogDetail from './pages/blog/[id]/blog';
+import sampleBlogs from './components/blogs/sampledata';
+
+
+
 
 function App() {
   const myContext = useContext(MyContext);
@@ -51,6 +58,10 @@ function App() {
             <Route path={'/hi/:category'} element={<News />} />
             <Route path={'/en/addnews'} element={<AddNewsApp />} />
             <Route path={'/en/login'} element={<Login/>} /> {/* ✅ AddNews Route */}
+            <Route path={'/en/blog'} element={<Home/>} />
+            <Route path={'/en/blog/:blogId'} element={<BlogDetail blogs={sampleBlogs} />} />
+            <Route path={'/hi/blog'} element={<Blog />} />
+            <Route path={'/hi/blog/:blogId'} element={<BlogDetail blogs={sampleBlogs} />} />
             <Route path={'*'} element={<News />} />
           </Routes>
         </Slider>
@@ -62,7 +73,12 @@ function App() {
             <Route path={'/en/:category'} element={<News />} />
             <Route path={'/hi/:category'} element={<News />} />
             <Route path={'/en/addnews'} element={<AddNewsApp />} /> {/* ✅ AddNews Route */}
+
             <Route path={'/en/login'} element={<Login/>} />
+            <Route path={'/en/blog'} element={<Home />} />
+            <Route path={'/en/blog/:blogId'}element={<BlogDetail blogs={sampleBlogs} />} />
+            <Route path={'/hi/blog'} element={<Blog />} />
+            <Route path={'/hi/blog/:blogId'} element={<BlogDetail blogs={sampleBlogs} />} />
             <Route path={'*'} element={<News />} />
           </Routes>
           <Footer />
