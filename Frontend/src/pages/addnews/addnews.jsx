@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-
+import "./addnews.css";
 const API_URL = "http://localhost:5000/api/news";
 
 export default function AddNewsApp() {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null); // New state for success message
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -23,6 +25,7 @@ export default function AddNewsApp() {
       const res = await axios.get(`${API_URL}/`);
       setNews(res.data);
     } catch (error) {
+      setError("Failed to fetch news. Please try again later.");
       console.error(error);
     } finally {
       setLoading(false);
@@ -34,12 +37,20 @@ export default function AddNewsApp() {
   };
 
   const handleFileChange = (e) => {
-    setFormData({ ...formData, photo: e.target.files[0] });
+    const file = e.target.files[0];
+    if (file) {
+      setFormData({ ...formData, photo: file });
+      setSuccessMessage("Image has been added successfully!"); // Set success message
+      setError(null); // Clear any previous errors
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setError(null);
+    setSuccessMessage(null); // Clear success message on submission
+
     const form = new FormData();
     Object.keys(formData).forEach((key) => form.append(key, formData[key]));
 
@@ -54,7 +65,9 @@ export default function AddNewsApp() {
         category: "",
         photo: null,
       });
+      setSuccessMessage("News added successfully!"); // Success message after submission
     } catch (error) {
+      setError("Failed to add news. Please try again.");
       console.error(error);
     } finally {
       setLoading(false);
@@ -65,37 +78,39 @@ export default function AddNewsApp() {
     <div className="container">
       <h1>News Management</h1>
       <form onSubmit={handleSubmit} className="news-form">
-        <input 
-          type="text" 
-          name="title" 
-          placeholder="Title" 
-          onChange={handleChange} 
-          required 
+        <input
+          type="text"
+          name="title"
+          placeholder="Title"
+          onChange={handleChange}
+          required
         />
-        <textarea 
-          name="description" 
-          placeholder="Description" 
-          onChange={handleChange} 
-          required 
+        <textarea
+          name="description"
+          placeholder="Description"
+          onChange={handleChange}
+          required
           rows={4}
         />
-        <input 
-          type="text" 
-          name="category" 
-          placeholder="Category" 
-          onChange={handleChange} 
-          required 
+        <input
+          type="text"
+          name="category"
+          placeholder="Category"
+          onChange={handleChange}
+          required
         />
         <div className="file-input-container">
-          <input 
-            type="file" 
-            onChange={handleFileChange} 
-            required 
+          <input
+            type="file"
+            onChange={handleFileChange}
+            required
             id="photo-upload"
             accept="image/*"
           />
           <label htmlFor="photo-upload">Choose a photo</label>
         </div>
+        {successMessage && <p className="success-message">{successMessage}</p>}
+        {error && <p className="error-message">{error}</p>}
         <button type="submit" disabled={loading}>
           {loading ? (
             <>
@@ -103,7 +118,7 @@ export default function AddNewsApp() {
               <span>Processing...</span>
             </>
           ) : (
-            'Add News'
+            "Add News"
           )}
         </button>
       </form>
@@ -125,7 +140,11 @@ export default function AddNewsApp() {
               </div>
               {item.photo && (
                 <div className="news-image">
-                  <img src={`http://localhost:5000${item.photo}`} alt={item.title} loading="lazy" />
+                  <img
+                    src={`http://localhost:5000${item.photo}`}
+                    alt={item.title}
+                    loading="lazy"
+                  />
                 </div>
               )}
             </div>
@@ -135,231 +154,3 @@ export default function AddNewsApp() {
     </div>
   );
 }
-
-// Enhanced CSS with animations and better styling
-const css = `
-  .container {
-    max-width: 800px;
-    width: 90%;
-    margin: 6rem auto;
-    padding: 0 20px;
-  }
-
-  h1 {
-    font-size: 2.5rem;
-    color: #1a1a1a;
-    margin-bottom: 2rem;
-    position: relative;
-    padding-bottom: 0.5rem;
-  }
-
-  h1::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 3px;
-    background: #007aff;
-    border-radius: 2px;
-  }
-
-  .news-form {
-    background: #ffffff;
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-bottom: 2rem;
-  }
-
-  .news-form input:not([type="file"]),
-  .news-form textarea {
-    width: 100%;
-    padding: 12px 16px;
-    margin: 8px 0;
-    border: 2px solid #e1e1e1;
-    border-radius: 8px;
-    font-size: 16px;
-    transition: all 0.3s ease;
-  }
-
-  .news-form input:focus,
-  .news-form textarea:focus {
-    outline: none;
-    border-color: #007aff;
-    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
-  }
-
-  .file-input-container {
-    position: relative;
-    margin: 16px 0;
-  }
-
-  .file-input-container input[type="file"] {
-    opacity: 0;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    cursor: pointer;
-  }
-
-  .file-input-container label {
-    display: block;
-    padding: 12px 20px;
-    background: #f5f5f5;
-    border: 2px dashed #ccc;
-    border-radius: 8px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  .file-input-container:hover label {
-    border-color: #007aff;
-    background: #f0f7ff;
-  }
-
-  button {
-    width: 100%;
-    padding: 12px 24px;
-    background: #007aff;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-  }
-
-  button:hover {
-    background: #0056b3;
-    transform: translateY(-1px);
-  }
-
-  button:disabled {
-    background: #cccccc;
-    cursor: not-allowed;
-    transform: none;
-  }
-
-  .spinner {
-    width: 16px;
-    height: 16px;
-    border: 2px solid transparent;
-    border-top-color: #ffffff;
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-  }
-
-  @keyframes spin {
-    to { transform: rotate(360deg); }
-  }
-
-  .loading {
-    text-align: center;
-    padding: 2rem;
-    color: #666;
-  }
-
-  .loading .spinner {
-    width: 32px;
-    height: 32px;
-    margin: 0 auto 1rem;
-  }
-
-  .news-list {
-    display: grid;
-    gap: 1.5rem;
-  }
-
-  .news-item {
-    background: white;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .news-item:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-
-  .news-content {
-    padding: 1.5rem;
-  }
-
-  .news-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 1rem;
-  }
-
-  .news-header h3 {
-    margin: 0;
-    font-size: 1.5rem;
-    color: #1a1a1a;
-  }
-
-  .category-badge {
-    background: #f0f7ff;
-    color: #007aff;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.875rem;
-    font-weight: 500;
-  }
-
-  .news-item p {
-    color: #666;
-    line-height: 1.6;
-    margin: 0;
-  }
-
-  .news-image {
-    width: 100%;
-    height: 240px;
-    overflow: hidden;
-  }
-
-  .news-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-  }
-
-  .news-item:hover .news-image img {
-    transform: scale(1.05);
-  }
-
-  @media (max-width: 768px) {
-    .container {
-      width: 95%;
-      padding: 0 10px;
-    }
-
-    h1 {
-      font-size: 2rem;
-    }
-
-    .news-form {
-      padding: 1.5rem;
-    }
-
-    .news-image {
-      height: 200px;
-    }
-  }
-`;
-
-const styleTag = document.createElement("style");
-styleTag.innerHTML = css;
-document.head.appendChild(styleTag);

@@ -2,7 +2,7 @@ import BlogList from "../../components/blogs/bloglist"
 import sampleBlogs from "../../components/blogs/sampledata"
 
 
-// Sample data - in a real app, you would fetch this from an API
+//Sample data - in a real app, you would fetch this from an API
 // const sampleBlogs = [
 //   {
 //     id: "1",

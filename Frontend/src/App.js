@@ -13,6 +13,12 @@ import Blog from './pages/blog/[id]/blog';
 import Home from './pages/blogpage/BlogPage';
 import BlogDetail from './pages/blog/[id]/blog';
 import sampleBlogs from './components/blogs/sampledata';
+import AdminBlogEditor from './pages/customBlog/AdminBlog';
+import SignUpPage from './pages/signup/Signup';
+import ForgotPassword from './pages/forgot-password/ForgotPassword';
+import ResetPassword from './pages/reset-password/[token]/ResetPassword';
+import AdminLogin from './pages/admin/AdminLogin';
+import AdminDashboard from './pages/admin/AdminDashboard';
 
 
 
@@ -57,11 +63,17 @@ function App() {
             <Route path={'/en/:category'} element={<News />} />
             <Route path={'/hi/:category'} element={<News />} />
             <Route path={'/en/addnews'} element={<AddNewsApp />} />
-            <Route path={'/en/login'} element={<Login/>} /> {/* ✅ AddNews Route */}
-            <Route path={'/en/blog'} element={<Home/>} />
-            <Route path={'/en/blog/:blogId'} element={<BlogDetail blogs={sampleBlogs} />} />
-            <Route path={'/hi/blog'} element={<Blog />} />
-            <Route path={'/hi/blog/:blogId'} element={<BlogDetail blogs={sampleBlogs} />} />
+            <Route path={'/en/login'} element={<Login/>} />
+            <Route path={'/en/forgot-password'} element={<ForgotPassword/>} />
+            <Route path="/en/reset-password/:token" element={<ResetPassword />} />
+            <Route path={'/en/signup'} element={<SignUpPage/>} />
+            <Route path={'/en/admin'} element={<AdminLogin/>} /> 
+            <Route path={'/en/admin/dashboard'} element={<AdminDashboard/>} /> 
+            <Route path={'/en/blogs'} element={<Home/>} />
+            <Route path={'/en/blogs/:blogId'} element={<BlogDetail blogs={sampleBlogs} />} />
+            <Route path={'/hi/blogs'} element={<Blog />} />
+            <Route path={'/hi/blogs/:blogId'} element={<BlogDetail blogs={sampleBlogs} />} />
+            <Route path={'/en/customblog'} element={<AdminBlogEditor/>} />
             <Route path={'*'} element={<News />} />
           </Routes>
         </Slider>
@@ -73,12 +85,17 @@ function App() {
             <Route path={'/en/:category'} element={<News />} />
             <Route path={'/hi/:category'} element={<News />} />
             <Route path={'/en/addnews'} element={<AddNewsApp />} /> {/* ✅ AddNews Route */}
-
+            <Route path={'/en/customblog'} element={<AdminBlogEditor/>} />
             <Route path={'/en/login'} element={<Login/>} />
-            <Route path={'/en/blog'} element={<Home />} />
-            <Route path={'/en/blog/:blogId'}element={<BlogDetail blogs={sampleBlogs} />} />
-            <Route path={'/hi/blog'} element={<Blog />} />
-            <Route path={'/hi/blog/:blogId'} element={<BlogDetail blogs={sampleBlogs} />} />
+            <Route path={'/en/admin'} element={<AdminLogin/>} /> 
+            <Route path={'/en/admin/dashboard'} element={<AdminDashboard/>} /> 
+            <Route path={'/en/forgot-password'} element={<ForgotPassword/>} />
+            <Route path="/en/reset-password/:token" element={<ResetPassword />} />
+            <Route path={'/en/signup'} element={<SignUpPage/>} /> 
+            <Route path={'/en/blogs'} element={<Home />} />
+            <Route path={'/en/blogs/:blogId'}element={<BlogDetail blogs={sampleBlogs} />} />
+            <Route path={'/hi/blogs'} element={<Blog />} />
+            <Route path={'/hi/blogs/:blogId'} element={<BlogDetail blogs={sampleBlogs} />} />
             <Route path={'*'} element={<News />} />
           </Routes>
           <Footer />

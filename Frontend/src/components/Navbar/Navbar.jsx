@@ -10,7 +10,8 @@ const mainCategories = [
     { english: "Health", hindi: "स्वास्थ्य" },
     { english: "Science", hindi: "विज्ञान" },
     { english: "Sports", hindi: "खेल" },
-    { english: "Technology", hindi: "तकनीकी" }
+    { english: "Technology", hindi: "तकनीकी" },
+     {english : "Blogs" , hindi : "ब्लॉग्स"}
 ];
 
 const Navbar = ({ displayNavbar, setDisplayNavbar }) => {
@@ -60,11 +61,14 @@ const Navbar = ({ displayNavbar, setDisplayNavbar }) => {
             </div>
             <hr />
             <div className="admin-login">
-                <NavLink to="/en/login" onClick={categoryClicked}>Admin Login</NavLink>
+                <NavLink to="/en/signup" onClick={categoryClicked}>Sign Up</NavLink>
             </div>
             <div className="admin-login">
-                <NavLink to="/en/blog" onClick={categoryClicked}>MyBlog</NavLink>
+                <NavLink to="/en/login" onClick={categoryClicked}>Login</NavLink>
             </div>
+            {/* <div className="admin-login">
+                <NavLink to="/en/blog" onClick={categoryClicked}>Blogs</NavLink>
+            </div> */}
         </div>
     );
 };

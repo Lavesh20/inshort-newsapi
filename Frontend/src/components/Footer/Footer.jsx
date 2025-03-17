@@ -21,16 +21,16 @@ const Footer = () => {
                             <div className="copyright">
                                 <b>Inshorts Clone</b>
                                 <br />
-                                Created by <a className="creator" href='https://www.linkedin.com/in/dipayanmaji/' target='_blank'>DipAYAN</a>
+                                Created by <a className="creator" href='https://www.linkedin.com/in/lavesh-vyas/' target='_blank'>Lavesh Vyas</a>
                                 <br />
-                                ©COPYRIGHT 2023
+                                ©COPYRIGHT 2025
                             </div>
                         </div>
 
                         <span className="divider"></span>
 
                         <div className="container">
-                            <a href="mailto:dipayanmaji1112@gmail.com"><img src={contact} alt="Contact Us" /></a>
+                            <a href="mailto:laveshvyas20@gmail.com"><img src={contact} alt="Contact Us" /></a>
 
                             <div className="terms-condition">
                                 <a href="https://inshorts.com/tnc" target="_blank">Terms & conditions</a>
@@ -40,11 +40,11 @@ const Footer = () => {
                     </div>
 
                     <div className="right-part">
-                        <a href='https://www.linkedin.com/in/dipayanmaji/' target='_blank'><i className="fa-brands fa-linkedin-in"></i></a>
-                        <a href='https://github.com/dipayanmaji' target='_blank'><i className="fa-brands fa-github"></i></a>
-                        <a href='https://twitter.com/dipayanmaji11' target='_blank'><i className="fa-brands fa-x-twitter"></i></a>
-                        <a href='https://www.instagram.com/dipayan.maji/' target='_blank'><i className="fa-brands fa-instagram"></i></a>
-                        <a href='https://www.facebook.com/dip.ayan.716' target='_blank'><i className="fa-brands fa-facebook-f"></i></a>
+                        <a href='#' target='_blank'><i className="fa-brands fa-linkedin-in"></i></a>
+                        <a href='#' target='_blank'><i className="fa-brands fa-github"></i></a>
+                        <a href='#' target='_blank'><i className="fa-brands fa-x-twitter"></i></a>
+                        <a href='#' target='_blank'><i className="fa-brands fa-instagram"></i></a>
+                        <a href='#' target='_blank'><i className="fa-brands fa-facebook-f"></i></a>
                     </div>
                 </div>}
         </footer>

@@ -1,0 +1,219 @@
+/* SignUpPage.css */
+.signup-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh; /* Reduced from 100vh to accommodate navbar and footer */
+    padding: 20px;
+    margin-top: 2rem;
+    /* No background color here to avoid overriding the main page background */
+  }
+  
+  .signup-container {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 450px;
+    padding: 40px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .signup-header {
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  
+  .signup-header h1 {
+    color: #2c3e50;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  
+  .signup-form-group {
+    margin-bottom: 20px;
+  }
+  
+  .signup-form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #444;
+  }
+  
+  .signup-form-control {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    transition: border-color 0.3s;
+  }
+  
+  .signup-form-control:focus {
+    border-color: #3498db;
+    outline: none;
+  }
+  
+  .signup-password-container {
+    position: relative;
+  }
+  
+  .signup-password-toggle {
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+  }
+  
+  .signup-password-toggle input {
+    margin-right: 8px;
+    cursor: pointer;
+  }
+  
+  .signup-password-requirements {
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    padding: 12px 15px;
+    margin-top: 10px;
+    font-size: 13px;
+  }
+  
+  .signup-password-requirements ul {
+    list-style-type: none;
+    padding-left: 5px;
+  }
+  
+  .signup-password-requirements li {
+    margin-bottom: 5px;
+    color: #666;
+    display: flex;
+    align-items: center;
+  }
+  
+  .signup-password-requirements li::before {
+    content: "•";
+    color: #999;
+    font-weight: bold;
+    margin-right: 8px;
+  }
+  
+  .signup-social {
+    margin: 25px 0;
+    position: relative;
+    text-align: center;
+  }
+  
+  .signup-social::before {
+    content: "";
+    display: block;
+    height: 1px;
+    width: 100%;
+    background-color: #ddd;
+    position: absolute;
+    top: 50%;
+  }
+  
+  .signup-social span {
+    background-color: #fff;
+    padding: 0 15px;
+    position: relative;
+    color: #666;
+    font-size: 14px;
+  }
+  
+  .signup-social-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+  }
+  
+  .signup-social-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    width: 100%;
+  }
+  
+  .signup-social-button:hover {
+    background-color: #f5f7fa;
+    transform: translateY(-2px);
+  }
+  
+  .signup-google-button {
+    color: #444;
+  }
+  
+  .signup-terms {
+    margin: 20px 0;
+    font-size: 14px;
+    color: #666;
+    display: flex;
+    align-items: flex-start;
+  }
+  
+  .signup-terms input {
+    margin-right: 10px;
+    margin-top: 3px;
+  }
+  
+  .signup-terms a {
+    color: #3498db;
+    text-decoration: none;
+  }
+  
+  .signup-terms a:hover {
+    text-decoration: underline;
+  }
+  
+  .signup-submit-btn {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .signup-submit-btn:hover {
+    background-color: #2980b9;
+  }
+  
+  .signup-login-link {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .signup-login-link a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  .signup-login-link a:hover {
+    text-decoration: underline;
+  }
+  
+  @media (max-width: 480px) {
+    .signup-container {
+      padding: 25px;
+    }
+    
+    .signup-header h1 {
+      font-size: 22px;
+    }
+  }
