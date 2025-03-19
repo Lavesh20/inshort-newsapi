@@ -1,5 +1,4 @@
-/* LoginPage.css */
-.login-container {
+/* .login-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -126,4 +125,206 @@
   color: #ff0000;
   text-align: center;
   margin-bottom: 1rem;
+} */
+
+/* General Styles */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding: 20px;
+  margin-top: 60px; /* Adjust this based on your navbar height */
+}
+
+
+/* Login Box */
+.login-box {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Login Heading */
+.login-box h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #333;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+/* Form Group */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #555;
+  font-weight: 500;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Show Password Fix */
+.show-password {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.show-password input {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.show-password label {
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+}
+
+/* Remember Me */
+.remember-me {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 1rem;
+}
+
+.remember-me input {
+  cursor: pointer;
+}
+
+/* Login Button */
+.login-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.login-button:hover {
+  background-color: #0056b3;
+  transform: scale(1.02);
+}
+
+/* Google Login Fix */
+.social-login {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.social-login::before {
+  content: none; /* Removes unwanted line */
+}
+
+/* Google Login Button */
+.google-login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px;
+  background-color: #db4437;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.google-login:hover {
+  background-color: #c23321;
+  transform: scale(1.02);
+}
+
+/* Forgot Password */
+.forgot-password {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.forgot-password a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
+}
+
+/* Sign Up Link */
+.sign-up {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.sign-up a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.sign-up a:hover {
+  text-decoration: underline;
+}
+
+/* Error Message */
+.error-message {
+  color: #ff0000;
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 14px;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .login-box {
+    padding: 1.5rem;
+  }
+
+  .login-box h2 {
+    font-size: 22px;
+  }
+
+  .form-group input {
+    font-size: 13px;
+  }
+
+  .login-button, .google-login {
+    font-size: 14px;
+    padding: 10px;
+  }
 }

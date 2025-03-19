@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from "axios";
 import './Signup.css'; // You would create this file with the CSS below
 
 const SignUpPage = () => {
@@ -18,11 +19,22 @@ const SignUpPage = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log('Form submitted:', formData);
+  
+    try {
+      const response = await axios.post("http://localhost:5000/api/user/register", formData);
+  
+      console.log("Signup successful:", response.data);
+  
+      // Handle success (e.g., store JWT, redirect user)
+      alert("Account created successfully!");
+    } catch (error) {
+      console.error("Signup failed:", error.response?.data || error.message);
+      alert(error.response?.data?.message || "Signup failed. Try again.");
+    }
   };
+  
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);

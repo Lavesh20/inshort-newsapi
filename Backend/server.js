@@ -14,6 +14,8 @@ const jwt = require("jsonwebtoken");
 const adminRoutes = require("./routes/adminRoutes");
 const newsRoutes = require("./routes/newsRoutes");
 const authRoutes = require("./routes/authRoutes");
+const blogRoutes = require("./routes/blogRoutes");
+const userRoutes = require('./routes/userRoutes');
 const Admin = require("./models/Admin");
 
 dotenv.config();
@@ -53,6 +55,8 @@ app.use(passport.session());
 // 🌍 Routes
 app.use("/api/admin", adminRoutes);
 app.use("/api/news", newsRoutes);
+app.use("/api/blogs", blogRoutes);
+app.use('/api/user', userRoutes);
 app.use("/", authRoutes);
 
 app.get("/", (req, res) => {
