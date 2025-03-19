@@ -16,6 +16,7 @@ exports.createBlog = async (req, res) => {
 
     await newBlog.save();
     res.status(201).json({ message: "✅ Blog published successfully!", blog: newBlog });
+    console.log("Blog added successfully!");
   } catch (error) {
     console.error("❌ Error publishing blog:", error);
     res.status(500).json({ message: "❌ Failed to publish blog." });

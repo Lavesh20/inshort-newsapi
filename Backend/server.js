@@ -63,7 +63,7 @@ app.get("/", (req, res) => {
   res.status(200).send({ message: "Welcome to your Express application" });
 });
 
-// 🎯 Google OAuth Callback
+//🎯 Google OAuth Callback
 app.get(
   "/auth/google/callback",
   passport.authenticate("google", { failureRedirect: "/" }),

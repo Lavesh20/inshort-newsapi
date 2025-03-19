@@ -3,6 +3,7 @@ import axios from 'axios'; // Import axios for API calls
 import { useNavigate } from 'react-router-dom'; // For navigation
 import './login.css'; // Import the CSS file
 
+
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -86,6 +87,7 @@ const LoginPage = () => {
         <div className="forgot-password">
           <a href="/en/forgot-password">Forgot your password?</a>
         </div>
+       
         <div className="sign-up">
           <p>Don't have an account? <a href="/en/signup">Sign up</a></p>
         </div>
