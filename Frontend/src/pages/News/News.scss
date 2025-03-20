@@ -114,3 +114,51 @@
         }
     }
 }
+
+.filter-controls {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    padding: 0 15px;
+    
+    .filter-btn {
+      background-color: #f0f0f0;
+      border: none;
+      border-radius: 4px;
+      padding: 8px 16px;
+      margin: 0 5px 10px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        background-color: #e0e0e0;
+      }
+      
+      &.active {
+        background-color: #ff6b6b;
+        color: white;
+      }
+      
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    }
+  }
+  
+  /* For mobile devices */
+  .mobile-news .filter-controls {
+    position: sticky;
+    top: 60px;
+    z-index: 5;
+    background-color: white;
+    padding: 10px 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    
+    .filter-btn {
+      padding: 6px 10px;
+      font-size: 12px;
+    }
+  }

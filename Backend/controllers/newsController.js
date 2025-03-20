@@ -107,3 +107,16 @@ exports.deleteNews = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+// get all custom news
+exports.getAllCustomNews = async (req, res) => {
+  try {
+    const news = await CustomNews.find(); // Fetch all news
+    console.log("Fetched news:", news); // Debugging log
+    res.status(200).json(news);
+  } catch (error) {
+    console.error("Error fetching news:", error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
