@@ -18,9 +18,27 @@ const Navbar = ({ displayNavbar, setDisplayNavbar }) => {
     const [categories, setCategories] = useState(mainCategories);
     const myContext = useContext(MyContext);
     const { language, setLanguage, currPath } = myContext;
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+      // Check if user is logged in
+      useEffect(() => {
+        const token = localStorage.getItem('jwt');
+        if (token) {
+            setIsLoggedIn(true);
+        } else {
+            setIsLoggedIn(false);
+        }
+    }, []);
 
     const categoryClicked = () => {
         setDisplayNavbar(false);
+    };
+
+    const handleLogout = () => {
+        localStorage.removeItem('jwt');
+        setIsLoggedIn(false);
+        setDisplayNavbar(false);
+        // You might want to redirect to home page or refresh the page here
     };
 
     const languageHandler = (e) => {
@@ -60,15 +78,24 @@ const Navbar = ({ displayNavbar, setDisplayNavbar }) => {
                 ))}
             </div>
             <hr />
+            {!isLoggedIn && (
+                <div className="admin-login">
+                    <NavLink to="/en/signup" onClick={categoryClicked}>Sign Up</NavLink>
+                </div>
+            )}
+            
             <div className="admin-login">
-                <NavLink to="/en/signup" onClick={categoryClicked}>Sign Up</NavLink>
+                {isLoggedIn ? (
+                    <NavLink to="/" onClick={handleLogout}>Logout</NavLink>
+                ) : (
+                    <NavLink to="/en/login" onClick={categoryClicked}>Login</NavLink>
+                )}
             </div>
-            <div className="admin-login">
-                <NavLink to="/en/login" onClick={categoryClicked}>Login</NavLink>
+            {/* 
+            <div className="blogs">
+                <NavLink to="/blogs">Blogs</NavLink>
             </div>
-            {/* <div className="admin-login">
-                <NavLink to="/en/blog" onClick={categoryClicked}>Blogs</NavLink>
-            </div> */}
+            */}
         </div>
     );
 };

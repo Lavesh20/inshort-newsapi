@@ -175,12 +175,12 @@ const SignUpPage = () => {
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-gray-200"></div>
               </div>
-              {/* <div className="relative flex justify-center text-sm">
+              <div className="relative flex justify-center text-sm">
                 <span className="px-2 bg-white text-gray-500">Or sign up with</span>
-              </div> */}
+              </div>
             </div>
             
-            {/* <div>
+             <div>
               <button 
                 type="button" 
                 className="w-full flex justify-center items-center gap-3 bg-white text-gray-700 hover:bg-gray-50 px-4 py-3 border border-gray-300 rounded-lg shadow-sm transition-all"
@@ -193,7 +193,7 @@ const SignUpPage = () => {
                 </svg>
                 Continue with Google
               </button>
-            </div> */}
+            </div> 
             
             <div className="flex items-start">
               <div className="flex items-center h-5">
