@@ -4,37 +4,36 @@ import { useNavigate, useParams } from 'react-router-dom';
 import './ResetPassword.css';
 
 const ResetPassword = () => {
-  const [newPassword, setNewPassword] = useState('');
+  const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
-  const { token } = useParams(); // Extract token from URL parameters
+  const { token } = useParams();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    setMessage('');
 
-    if (newPassword !== confirmPassword) {
+    if (password !== confirmPassword) {
       setError('Passwords do not match.');
       return;
     }
 
     try {
-      const response = await axios.post('https://your-backend-api.com/reset-password', {
+      const response = await axios.post(`http://localhost:5000/api/user/reset-password`, {
         token,
-        newPassword,
+        password,
+        confirmPassword,
       });
 
       setMessage(response.data.message);
-      setError('');
-
       setTimeout(() => {
         navigate('/en/login');
       }, 3000);
     } catch (err) {
       setError(err.response?.data?.error || 'An error occurred. Please try again.');
-      setMessage('');
-      console.error('Reset password error:', err);
     }
   };
 
@@ -46,12 +45,12 @@ const ResetPassword = () => {
         {error && <p className="error-message">{error}</p>}
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="newPassword">New Password</label>
+            <label htmlFor="password">New Password</label>
             <input
               type="password"
-              id="newPassword"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>

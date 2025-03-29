@@ -5,40 +5,52 @@ import { MyContext } from "../../CustomContext";
 
 const mainCategories = [
     { english: "National", hindi: "भारत" },
-    { english: "Business", hindi: "बिज़नेस" },
+    { english: "Business", hindi: "बिज़नेस" },
     { english: "Entertainment", hindi: "मनोरंजन" },
     { english: "Health", hindi: "स्वास्थ्य" },
     { english: "Science", hindi: "विज्ञान" },
     { english: "Sports", hindi: "खेल" },
     { english: "Technology", hindi: "तकनीकी" },
-     {english : "Blogs" , hindi : "ब्लॉग्स"}
+    { english: "Blogs", hindi: "ब्लॉग्स" },
+    { english: "Stocks", hindi: "ब्लॉग्स" }
 ];
 
 const Navbar = ({ displayNavbar, setDisplayNavbar }) => {
     const [categories, setCategories] = useState(mainCategories);
     const myContext = useContext(MyContext);
     const { language, setLanguage, currPath } = myContext;
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-      // Check if user is logged in
-      useEffect(() => {
-        const token = localStorage.getItem('jwt');
-        if (token) {
-            setIsLoggedIn(true);
-        } else {
-            setIsLoggedIn(false);
-        }
+    const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("jwt"));
+    
+    useEffect(() => {
+        setIsLoggedIn(!!localStorage.getItem("jwt"));
+    }, [displayNavbar]);
+    
+    useEffect(() => {
+        const checkLoginStatus = () => {
+            setIsLoggedIn(!!localStorage.getItem("jwt"));
+        };
+        
+        window.addEventListener('storage', checkLoginStatus);
+        
+        return () => {
+            window.removeEventListener('storage', checkLoginStatus);
+        };
     }, []);
 
     const categoryClicked = () => {
         setDisplayNavbar(false);
     };
 
+    const handleLogin = (token) => {
+        localStorage.setItem("jwt", token);
+        setIsLoggedIn(true);
+        setDisplayNavbar(false);
+    };
+
     const handleLogout = () => {
-        localStorage.removeItem('jwt');
+        localStorage.removeItem("jwt");
         setIsLoggedIn(false);
         setDisplayNavbar(false);
-        // You might want to redirect to home page or refresh the page here
     };
 
     const languageHandler = (e) => {
@@ -70,7 +82,7 @@ const Navbar = ({ displayNavbar, setDisplayNavbar }) => {
                 {categories.map((category, index) => (
                     <NavLink
                         key={index}
-                        to={`/${language}/${category.english.toLocaleLowerCase()}`}
+                        to={`/${language}/${category.english.toLowerCase()}`}
                         onClick={categoryClicked}
                     >
                         {language === "hi" ? category.hindi : category.english === "National" ? "India" : category.english}
@@ -80,22 +92,23 @@ const Navbar = ({ displayNavbar, setDisplayNavbar }) => {
             <hr />
             {!isLoggedIn && (
                 <div className="admin-login">
-                    <NavLink to="/en/signup" onClick={categoryClicked}>Sign Up</NavLink>
+                    <NavLink to={`/${language}/signup`} onClick={categoryClicked}>
+                        {language === "hi" ? "साइन अप" : "Sign Up"}
+                    </NavLink>
                 </div>
             )}
             
             <div className="admin-login">
                 {isLoggedIn ? (
-                    <NavLink to="/" onClick={handleLogout}>Logout</NavLink>
+                    <NavLink to={`/${language}/general`} onClick={handleLogout}>
+                        {language === "hi" ? "लॉग आउट" : "Logout"}
+                    </NavLink>
                 ) : (
-                    <NavLink to="/en/login" onClick={categoryClicked}>Login</NavLink>
+                    <NavLink to={`/${language}/login`} onClick={categoryClicked}>
+                        {language === "hi" ? "लॉग इन" : "Login"}
+                    </NavLink>
                 )}
             </div>
-            {/* 
-            <div className="blogs">
-                <NavLink to="/blogs">Blogs</NavLink>
-            </div>
-            */}
         </div>
     );
 };

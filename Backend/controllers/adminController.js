@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 // Admin Login
 const adminLogin = async (req, res) => {
   try {
+    console.log("Received Body:", req.body); // ✅ Log request body
     const { email, password } = req.body;
 
     // Validate input
@@ -40,3 +41,4 @@ const adminLogin = async (req, res) => {
 };
 
 module.exports = { adminLogin };
+

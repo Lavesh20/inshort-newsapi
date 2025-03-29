@@ -734,7 +734,7 @@
 
 
 import { useEffect, useState, useRef } from "react"
-import { useParams, Link } from "react-router-dom"
+import { useParams, Link, useNavigate } from "react-router-dom"
 import axios from "axios"
 
 var BlogPost = {
@@ -773,9 +773,19 @@ export default function BlogDetail() {
   const [error, setError] = useState(null)
   const [readingProgress, setReadingProgress] = useState(0)
   const articleRef = useRef(null)
-
+  const navigate = useNavigate()
   // Define API base URL
   const API_BASE_URL = "http://localhost:5000"
+
+  
+  useEffect(() => {
+    const token = localStorage.getItem('jwtToken')
+    if (!token) {
+      alert("You are not Authorized , first sign up or sign in")
+      navigate('/en/login')
+    }
+
+  }, [])
 
   // Calculate reading time
   const calculateReadingTime = (content) => {

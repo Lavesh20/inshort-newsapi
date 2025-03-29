@@ -19,6 +19,8 @@ import ForgotPassword from './pages/forgot-password/ForgotPassword';
 import ResetPassword from './pages/reset-password/[token]/ResetPassword';
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminDashboard from './pages/admin/AdminDashboard';
+import { SignIn, SignUp } from '@clerk/clerk-react';
+import LoginPage from './pages/login/login';
 
 
 
@@ -63,10 +65,12 @@ function App() {
             <Route path={'/en/:category'} element={<News />} />
             <Route path={'/hi/:category'} element={<News />} />
             <Route path={'/en/addnews'} element={<AddNewsApp />} />
-            <Route path={'/en/login'} element={<Login/>} />
+            <Route path={'/en/loginwithclerk'} element={<SignIn/>} />
+            <Route path={'/en/login'} element={<LoginPage/>} />
             <Route path={'/en/forgot-password'} element={<ForgotPassword/>} />
             <Route path="/en/reset-password/:token" element={<ResetPassword />} />
-            <Route path={'/en/signup'} element={<SignUpPage/>} />
+            <Route path={'/en/signupwithclerk'} element={<SignUp/>} />
+            <Route path={'/en/signup'} element={<SignUpPage/>} /> 
             <Route path={'/en/admin'} element={<AdminLogin/>} /> 
             <Route path={'/en/admin/dashboard'} element={<AdminDashboard/>} /> 
             <Route path={'/en/blogs'} element={<Home/>} />
@@ -86,11 +90,13 @@ function App() {
             <Route path={'/hi/:category'} element={<News />} />
             <Route path={'/en/addnews'} element={<AddNewsApp />} /> {/* ✅ AddNews Route */}
             <Route path={'/en/customblog'} element={<AdminBlogEditor/>} />
-            <Route path={'/en/login'} element={<Login/>} />
+            <Route path={'/en/loginwithcleark'} element={<SignIn/>} />
+            <Route path={'/en/login'} element={<LoginPage/>} />
             <Route path={'/en/admin'} element={<AdminLogin/>} /> 
             <Route path={'/en/admin/dashboard'} element={<AdminDashboard/>} /> 
             <Route path={'/en/forgot-password'} element={<ForgotPassword/>} />
             <Route path="/en/reset-password/:token" element={<ResetPassword />} />
+            <Route path={'/en/signupwithclerk'} element={<SignUp/>} />
             <Route path={'/en/signup'} element={<SignUpPage/>} /> 
             <Route path={'/en/blogs'} element={<Home />} />
             <Route path={'/en/blogs/:blogId'}element={<BlogDetail blogs={sampleBlogs} />} />

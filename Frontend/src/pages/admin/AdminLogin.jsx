@@ -4,7 +4,7 @@ import axios from "axios";
 import "./AdminLogin.css"; // Import the CSS file
 
 const AdminLogin = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -18,13 +18,13 @@ const AdminLogin = () => {
     try {
       // Send credentials to the backend for validation
       const response = await axios.post("http://localhost:5000/api/admin/login", {
-        username,
+        email, // ✅ Use 'email' instead of 'username'
         password,
       });
 
       if (response.data.success) {
         // Navigate to the admin dashboard on successful login
-        navigate("/admin/dashboard");
+        navigate("/en/admin/dashboard");
       } else {
         setError("Invalid username or password. Please try again.");
       }
@@ -43,12 +43,12 @@ const AdminLogin = () => {
         {error && <p className="error-message">{error}</p>}
         <form onSubmit={handleLogin}>
           <div className="form-group">
-            <label htmlFor="username">Username</label>
+            <label htmlFor="username">Email</label>
             <input
-              type="text"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
