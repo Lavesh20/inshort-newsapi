@@ -5,6 +5,7 @@ const customNewsSchema = new mongoose.Schema({
   description: { type: String, required: true },
   photo: { type: String, required: true },
   category: { type: String, required: true },
+  url:{type:String},
   by: { type: String, default: "Admin" },
 }, { timestamps: true, collection: "customnews" }); // 👈 Force collection name
 

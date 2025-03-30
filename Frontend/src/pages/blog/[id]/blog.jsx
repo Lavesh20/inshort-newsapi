@@ -775,7 +775,7 @@ export default function BlogDetail() {
   const articleRef = useRef(null)
   const navigate = useNavigate()
   // Define API base URL
-  const API_BASE_URL = "http://localhost:5000"
+  const API_BASE_URL = "https://inshorts-backend-xce7.onrender.com"
 
   
   useEffect(() => {
@@ -1076,7 +1076,7 @@ export default function BlogDetail() {
               {/* Share buttons */}
               <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
                 <h3 className="font-medium text-lg text-gray-900 mb-4">Share Article</h3>
-                <div className="grid grid-cols-2 gap-2">
+                {/* <div className="grid grid-cols-2 gap-2">
                   <button className="flex items-center justify-center gap-2 py-2 px-4 bg-[#1DA1F2] text-white rounded-md hover:bg-[#1a94e0] transition-colors">
                     <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
@@ -1089,7 +1089,7 @@ export default function BlogDetail() {
                     </svg>
                     <span>LinkedIn</span>
                   </button>
-                </div>
+                </div> */}
                 <button
                   className="w-full mt-2 flex items-center justify-center gap-2 py-2 px-4 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors"
                   onClick={copyToClipboard}
@@ -1112,7 +1112,7 @@ export default function BlogDetail() {
                 <div className="space-y-4">
                   {recentBlogs.length > 0 ? (
                     recentBlogs.map((recentBlog) => (
-                      <Link to={`/blog/${recentBlog.id}`} key={recentBlog.id} className="group block">
+                      <Link to={`/en/blogs/${recentBlog.id}`} key={recentBlog.id} className="group block">
                         <div className="flex gap-3">
                           <div className="relative h-16 w-16 flex-shrink-0 rounded-md overflow-hidden">
                             <img
@@ -1153,7 +1153,7 @@ export default function BlogDetail() {
                 </div>
                 <div className="mt-4 text-right">
                   <Link
-                    to="/blog"
+                    to="/en/blogs"
                     className="text-sm font-medium text-emerald-600 hover:text-emerald-700 inline-flex items-center gap-1"
                   >
                     View all posts

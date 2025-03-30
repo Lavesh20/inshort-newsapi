@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import './Footer.scss';
-import logo from '../../utilities/images/inshorts-logo-white.png';
+import logo from '../../utilities/images/sid2.png';
 import contact from '../../utilities/images/contact-us.png';
 import { MyContext } from "../../CustomContext";
 
@@ -16,7 +16,7 @@ const Footer = () => {
                 <div className="footer">
                     <div className="left-part">
                         <div className="container">
-                            <img src={logo} alt="Inshorts Clone" />
+                            <img src={logo} alt="Inshorts Clone" className="logo" />
 
                             <div className="copyright">
                                 <b>Inshorts Clone</b>

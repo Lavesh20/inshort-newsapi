@@ -41,7 +41,7 @@ const SignUpPage = () => {
     e.preventDefault();
   
     try {
-      const response = await axios.post("http://localhost:5000/api/user/register", formData);
+      const response = await axios.post("https://inshorts-backend-xce7.onrender.com/api/user/register", formData);
       console.log("Signup successful:", response.data);
       // Handle success (e.g., store JWT, redirect user)
       alert("Account created successfully!");

@@ -101,7 +101,8 @@
 import React, { useContext, useState, useEffect } from "react";
 import './Header.scss';
 import { Link } from "react-router-dom";
-import logo from '../../utilities/images/inshorts-logo-black.png'
+import logo from '../../utilities/images/sid2.png'
+
 import Navbar from "../Navbar/Navbar";
 import { MyContext } from "../../CustomContext";
 
@@ -145,6 +146,10 @@ const categories = [
     {
         english: "Bookmarks",
         hindi: "बुकमार्क"
+    },
+    {
+         english: "Stocks",
+          hindi: "शेयरों"
     }
 ];
 

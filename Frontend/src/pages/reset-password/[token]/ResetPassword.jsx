@@ -22,7 +22,7 @@ const ResetPassword = () => {
     }
 
     try {
-      const response = await axios.post(`http://localhost:5000/api/user/reset-password`, {
+      const response = await axios.post(`https://inshorts-backend-xce7.onrender.com/api/user/reset-password`, {
         token,
         password,
         confirmPassword,

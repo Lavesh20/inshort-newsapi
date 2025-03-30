@@ -13,7 +13,7 @@ function BlogList() {
   const [searchTerm, setSearchTerm] = useState("");
   
   const navigate = useNavigate();
-  const API_BASE_URL = "http://localhost:5000";
+  const API_BASE_URL = "https://inshorts-backend-xce7.onrender.com";
 
   useEffect(() => {
     const fetchBlogs = async () => {

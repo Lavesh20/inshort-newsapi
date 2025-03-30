@@ -1,9 +1,7 @@
-"use client"
-
 import { useState, useEffect } from "react"
 import axios from "axios"
 
-const API_URL = "http://localhost:5000/api/news"
+const API_URL = "https://inshorts-backend-xce7.onrender.com/api/news"
 
 export default function AddNewsApp() {
   const [news, setNews] = useState([])
@@ -15,6 +13,7 @@ export default function AddNewsApp() {
     description: "",
     category: "",
     photo: null,
+    url: ""
   })
   const [previewUrl, setPreviewUrl] = useState(null)
 
@@ -75,6 +74,7 @@ export default function AddNewsApp() {
         description: "",
         category: "",
         photo: null,
+        url:""
       })
       setPreviewUrl(null)
       setSuccessMessage("News added successfully!")
@@ -136,6 +136,20 @@ export default function AddNewsApp() {
                 placeholder="Enter news category"
                 onChange={handleChange}
                 required
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="url" className="block text-sm font-medium text-gray-700 mb-1">
+                URL
+              </label>
+              <input
+                type="url"
+                id="url"
+                name="url"
+                placeholder="Enter news URL"
+                onChange={handleChange}
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
               />
             </div>
@@ -291,6 +305,19 @@ export default function AddNewsApp() {
                         </span>
                       </div>
                       <p className="mt-2 text-gray-600 line-clamp-3">{item.description}</p>
+                      {item.url && (
+                        <a 
+                          href={item.url} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="mt-3 inline-flex items-center text-blue-600 hover:text-blue-800"
+                        >
+                          Read more
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                          </svg>
+                        </a>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -302,4 +329,3 @@ export default function AddNewsApp() {
     </div>
   )
 }
-

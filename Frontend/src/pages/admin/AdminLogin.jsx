@@ -17,7 +17,7 @@ const AdminLogin = () => {
 
     try {
       // Send credentials to the backend for validation
-      const response = await axios.post("http://localhost:5000/api/admin/login", {
+      const response = await axios.post("https://inshorts-backend-xce7.onrender.com/api/admin/login", {
         email, // ✅ Use 'email' instead of 'username'
         password,
       });

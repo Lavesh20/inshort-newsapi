@@ -14,7 +14,7 @@ const ForgotPassword = () => {
 
     try {
       // Make a POST request to your backend forgot password endpoint
-      const response = await axios.post('http://localhost:5000/api/user/forgot-password', {
+      const response = await axios.post('https://inshorts-backend-xce7.onrender.com/api/user/forgot-password', {
         email,
       });
 

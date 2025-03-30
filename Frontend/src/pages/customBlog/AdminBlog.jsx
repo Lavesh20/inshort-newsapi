@@ -65,7 +65,7 @@ function AdminBlogEditor() {
       formData.append("authorName", authorName);
 
       // Replace with your actual API endpoint
-      const response = await axios.post("http://localhost:5000/api/blogs", formData, {
+      const response = await axios.post("https://inshorts-backend-xce7.onrender.com/api/blogs", formData, {
         headers: {
           "Content-Type": "multipart/form-data", // Required for file uploads
         },

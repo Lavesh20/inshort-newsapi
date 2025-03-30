@@ -12,7 +12,7 @@ const mainCategories = [
     { english: "Sports", hindi: "खेल" },
     { english: "Technology", hindi: "तकनीकी" },
     { english: "Blogs", hindi: "ब्लॉग्स" },
-    { english: "Stocks", hindi: "ब्लॉग्स" }
+    { english: "Stocks", hindi: "शेयरों" }
 ];
 
 const Navbar = ({ displayNavbar, setDisplayNavbar }) => {

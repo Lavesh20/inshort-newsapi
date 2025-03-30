@@ -189,6 +189,10 @@ const mainCategories = [
         english: "Technology",
         hindi: "तकनीकी",
         imageUrl: technology
+    },
+    {
+         english: "Stocks",
+          hindi: "शेयरों"
     }
 ];
 
