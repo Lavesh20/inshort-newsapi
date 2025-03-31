@@ -221,7 +221,7 @@ function BlogList() {
               <div className="h-48 w-full overflow-hidden">
                 <img
                   className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                  src={blog.coverImage?.startsWith('http') ? blog.coverImage : `${API_BASE_URL}${blog.coverImage}`}
+                  src={blog.coverImage?.startsWith('https') ? blog.coverImage : `${API_BASE_URL}${blog.coverImage}`}
                   alt={blog.title}
                   onError={(e) => {
                     e.target.onerror = null;

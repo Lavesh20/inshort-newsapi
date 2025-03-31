@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import './Footer.scss';
-import logo from '../../utilities/images/sid2.png';
+import logo from '../../utilities/images/sid4.png';
 import contact from '../../utilities/images/contact-us.png';
 import { MyContext } from "../../CustomContext";
 
