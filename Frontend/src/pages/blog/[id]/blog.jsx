@@ -962,7 +962,7 @@ export default function BlogDetail() {
         {blog.coverImage && (
           <div className="relative w-full aspect-[16/9] mb-10 rounded-lg overflow-hidden">
             <img
-              src={blog.coverImage.startsWith("http") ? blog.coverImage : `${API_BASE_URL}${blog.coverImage}`}
+              src={blog.coverImage.startsWith("https") ? blog.coverImage : `${API_BASE_URL}${blog.coverImage}`}
               alt={blog.title}
               className="w-full h-full object-cover"
             />
