@@ -304,14 +304,19 @@ function BlogList() {
   const [searchTerm, setSearchTerm] = useState("");
   
   const navigate = useNavigate();
-  // Fixed the API base URL by removing any potential trailing slash
+  
+  // Ensure the API base URL is correctly formatted
+  // Remove any trailing slashes to avoid double slashes in URL construction
   const API_BASE_URL = "https://inshorts-backend-xce7.onrender.com";
 
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        // Ensure proper URL construction with leading slash in the path
-        const response = await axios.get(`${API_BASE_URL}/api/blogs`);
+        // Explicitly construct the full URL to avoid any string concatenation issues
+        const url = new URL("/api/blogs", API_BASE_URL).toString();
+        console.log("Fetching blogs from:", url); // Debug log
+        
+        const response = await axios.get(url);
         const blogsData = response.data;
         setBlogs(blogsData);
         
@@ -325,8 +330,8 @@ function BlogList() {
         setCategories(Array.from(allCategories));
         
       } catch (err) {
-        setError("Failed to load blogs");
         console.error("Error fetching blogs:", err);
+        setError(`Failed to load blogs: ${err.message}`);
       } finally {
         setLoading(false);
       }
@@ -334,6 +339,20 @@ function BlogList() {
 
     fetchBlogs();
   }, []);
+
+  // Helper function to safely construct image URLs
+  const getImageUrl = (imagePath) => {
+    if (!imagePath) return 'https://via.placeholder.com/350x200?text=No+Image';
+    if (imagePath.startsWith('http')) return imagePath;
+    
+    try {
+      // Safely join the base URL with the image path
+      return new URL(imagePath.startsWith('/') ? imagePath : `/${imagePath}`, API_BASE_URL).toString();
+    } catch (e) {
+      console.error("Error constructing image URL:", e);
+      return 'https://via.placeholder.com/350x200?text=Error+Loading+Image';
+    }
+  };
 
   // Filter and sort blogs whenever filter criteria change
   useEffect(() => {
@@ -395,6 +414,9 @@ function BlogList() {
     <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mx-4 my-6">
       <p className="font-bold">Error</p>
       <p>{error}</p>
+      <p className="mt-2">
+        Please check that the API at {API_BASE_URL} is accessible and running.
+      </p>
     </div>
   );
 
@@ -514,7 +536,7 @@ function BlogList() {
               <div className="h-48 w-full overflow-hidden">
                 <img
                   className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                  src={blog.coverImage?.startsWith('https') ? blog.coverImage : `${API_BASE_URL}${blog.coverImage.startsWith('/') ? '' : '/'}${blog.coverImage}`}
+                  src={getImageUrl(blog.coverImage)}
                   alt={blog.title}
                   onError={(e) => {
                     e.target.onerror = null;
