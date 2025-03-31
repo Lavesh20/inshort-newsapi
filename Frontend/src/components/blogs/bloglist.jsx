@@ -305,19 +305,16 @@ function BlogList() {
   
   const navigate = useNavigate();
   
-  // Ensure the API base URL is correctly formatted
-  // Remove any trailing slashes to avoid double slashes in URL construction
+  // Ensure the API base URL is correctly formatted without trailing slash
   const API_BASE_URL = "https://inshorts-backend-xce7.onrender.com";
 
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        // Explicitly construct the full URL to avoid any string concatenation issues
-        const url = new URL("/api/blogs", API_BASE_URL).toString();
-        console.log("Fetching blogs from:", url); // Debug log
-        
-        const response = await axios.get(url);
+        console.log("Fetching blogs from:", `${API_BASE_URL}/api/blogs`);
+        const response = await axios.get(`${API_BASE_URL}/api/blogs`);
         const blogsData = response.data;
+        console.log("Blogs data received:", blogsData.length, "blogs");
         setBlogs(blogsData);
         
         // Extract all unique categories
@@ -340,18 +337,20 @@ function BlogList() {
     fetchBlogs();
   }, []);
 
-  // Helper function to safely construct image URLs
+  // Improved image URL handler with better fallback strategy
   const getImageUrl = (imagePath) => {
+    // If no image path is provided, return a placeholder
     if (!imagePath) return 'https://via.placeholder.com/350x200?text=No+Image';
+    
+    // If the image path already starts with http/https, use it directly
     if (imagePath.startsWith('http')) return imagePath;
     
-    try {
-      // Safely join the base URL with the image path
-      return new URL(imagePath.startsWith('/') ? imagePath : `/${imagePath}`, API_BASE_URL).toString();
-    } catch (e) {
-      console.error("Error constructing image URL:", e);
-      return 'https://via.placeholder.com/350x200?text=Error+Loading+Image';
-    }
+    // For relative paths, make sure we have a properly formatted URL
+    // First, ensure the path starts with a slash if it doesn't already
+    const normalizedPath = imagePath.startsWith('/') ? imagePath : `/${imagePath}`;
+    
+    // Then join it with the API base URL
+    return `${API_BASE_URL}${normalizedPath}`;
   };
 
   // Filter and sort blogs whenever filter criteria change
@@ -539,6 +538,7 @@ function BlogList() {
                   src={getImageUrl(blog.coverImage)}
                   alt={blog.title}
                   onError={(e) => {
+                    console.log("Image failed to load:", e.target.src);
                     e.target.onerror = null;
                     e.target.src = 'https://via.placeholder.com/350x200?text=Image+Not+Found';
                   }}
