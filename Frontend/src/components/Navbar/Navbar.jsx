@@ -4,15 +4,23 @@ import { NavLink } from "react-router-dom";
 import { MyContext } from "../../CustomContext";
 
 const mainCategories = [
-    { english: "National", hindi: "भारत" },
-    { english: "Business", hindi: "बिज़नेस" },
-    { english: "Entertainment", hindi: "मनोरंजन" },
-    { english: "Health", hindi: "स्वास्थ्य" },
-    { english: "Science", hindi: "विज्ञान" },
-    { english: "Sports", hindi: "खेल" },
-    { english: "Technology", hindi: "तकनीकी" },
-    { english: "Blogs", hindi: "ब्लॉग्स" },
-    { english: "Stocks", hindi: "शेयरों" }
+    { "english": "National", "hindi": "भारत" },
+    { "english": "Business", "hindi": "बिज़नेस" },
+    { "english": "Entertainment", "hindi": "मनोरंजन" },
+    { "english": "Health", "hindi": "स्वास्थ्य" },
+    { "english": "Science", "hindi": "विज्ञान" },
+    { "english": "Sports", "hindi": "खेल" },
+    { "english": "Technology", "hindi": "तकनीकी" },
+    { "english": "Stocks", "hindi": "शेयरों" },
+    { "english": "Corporate News", "hindi": "कॉर्पोरेट समाचार" },
+    { "english": "Policy & Regulations", "hindi": "नीति और विनियम" },
+    { "english": "Pharma", "hindi": "फार्मा" },
+    { "english": "Banking", "hindi": "बैंकिंग" },
+    { "english": "Automobile", "hindi": "ऑटोमोबाइल" },
+    { "english": "FMCG", "hindi": "एफएमसीजी" },
+    { "english": "Power", "hindi": "ऊर्जा" },
+    { "english": "IPO", "hindi": "आईपीओ" },
+    { "english": "Cryptocurrencies", "hindi": "क्रिप्टोकरेंसी" }
 ];
 
 const Navbar = ({ displayNavbar, setDisplayNavbar }) => {

@@ -393,7 +393,21 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import Spinner from "../../components/Spinner/Spinner";
 
-const validQuaries = ["general", "national", "international", "business", "entertainment", "health", "science", "sports", "technology", "stocks"];
+// Added new custom categories to the valid queries list
+const validQuaries = [
+    "general", "national", "international", "business", "entertainment", 
+    "health", "science", "sports", "technology", "stocks",
+    // New custom categories
+    "ipo", "fmcg", "power", "automobile", "banking", 
+    "pharma", "cryptocurrencies", "corporateNews", "policyAndRegulation"
+];
+
+// Define which categories are custom-only (no API news)
+const customOnlyCategories = [
+    "stocks", "ipo", "fmcg", "power", "automobile", "banking", 
+    "pharma", "cryptocurrencies", "corporateNews", "policyAndRegulation"
+];
+
 let totalArticles;
 let pageNum;
 
@@ -439,6 +453,8 @@ const News = () => {
         category = "general";
     }
    
+    // Check if current category is custom-only
+    const isCustomOnlyCategory = customOnlyCategories.includes(params.category);
 
     // Apply filter to articles
     const applyFilter = (filter, articlesList) => {
@@ -459,8 +475,8 @@ const News = () => {
         try {
             let apiArticles = [];
             
-            // Only call the news API if not stocks category
-            if (params.category !== "stocks") {
+            // Only call the news API if not a custom-only category
+            if (!isCustomOnlyCategory) {
                 // 1. Fetch news from the GNews API
                 let result;
                 try {
@@ -543,8 +559,8 @@ const News = () => {
                         };
                     });
                     
-                    // If stocks category, only use custom articles
-                    if (params.category === "stocks") {
+                    // If custom-only category, only use custom articles
+                    if (isCustomOnlyCategory) {
                         finalArticles = formattedCustomArticles;
                         totalArticles = formattedCustomArticles.length;
                     } else {
@@ -565,7 +581,7 @@ const News = () => {
             const filteredArticles = applyFilter(filter, finalArticles);
             setArticles(filteredArticles);
             
-            if (pageNum * 10 >= totalArticles || params.category === "stocks") {
+            if (pageNum * 10 >= totalArticles || isCustomOnlyCategory) {
                 setDisplayLoadMore(false);
             }
             
@@ -584,7 +600,7 @@ const News = () => {
         setArticles(filteredArticles);
         
         // Show/hide load more based on current filter
-        if (newFilter === "custom" || newFilter === "api" || params.category === "stocks") {
+        if (newFilter === "custom" || newFilter === "api" || isCustomOnlyCategory) {
             setDisplayLoadMore(false);
         } else if (pageNum * 10 < totalArticles) {
             setDisplayLoadMore(true);
@@ -622,16 +638,25 @@ const News = () => {
             setAllArticles([]); // Clear previous articles
             
             // Reset the filter state based on category
-            if (params.category === "stocks") {
+            if (isCustomOnlyCategory) {
                 setFilter("custom");
                 setDisplayLoadMore(false); // No "load more" for custom-only categories
             } else {
-                // Always reset to "all" for non-stocks categories
+                // Always reset to "all" for non-custom-only categories
                 setFilter("all");
             }
             
             apiCall();
-            document.title = (params.category == "general" ? "TOP HEADLINES" : params.category.toLocaleUpperCase()) + " NEWS || INSHORTS CLONE";
+            
+            // Format category name for page title (convert camelCase to uppercase with spaces)
+            let formattedCategory = params.category;
+            if (params.category.match(/[A-Z]/)) {
+                formattedCategory = params.category
+                    .replace(/([A-Z])/g, ' $1')  // Insert space before capital letters
+                    .replace(/^./, str => str.toUpperCase());  // Capitalize first letter
+            }
+            
+            document.title = (params.category == "general" ? "TOP HEADLINES" : formattedCategory.toUpperCase()) + " NEWS || INSHORTS CLONE";
             setCurrPath(params.category);
         }
         window.scrollTo(0, 0);
@@ -640,8 +665,8 @@ const News = () => {
     }, [params.category, language])
 
     const loadMoreArticles = async () => {
-        // Don't allow loading more for stocks category
-        if (params.category === "stocks") return;
+        // Don't allow loading more for custom-only categories
+        if (isCustomOnlyCategory) return;
         
         setLodingBtn(true);
         pageNum += 1;
@@ -702,6 +727,16 @@ const News = () => {
     const customNewsCount = allArticles.filter(article => article.isCustom === true).length;
     const apiNewsCount = allArticles.filter(article => !article.isCustom).length;
 
+    // Format category name for display
+    const formatCategoryName = (category) => {
+        if (category.match(/[A-Z]/)) {
+            return category
+                .replace(/([A-Z])/g, ' $1')  // Insert space before capital letters
+                .replace(/^./, str => str.toUpperCase());  // Capitalize first letter
+        }
+        return category.charAt(0).toUpperCase() + category.slice(1);
+    };
+
     return (
         <div className={`news ${isMobileDevice && "mobile-news"}`} style={{ height: isMobileDevice && windowHeight }}>
             {isMobileDevice && <Header />}
@@ -712,13 +747,20 @@ const News = () => {
                         :
                         articles.length == 0 ?
                             <div className="bookmarks-err">
-                                <p>{language == 'hi' ? 'कोई बुकमार्क समाचार उपलब्ध नहीं हैं' : 'No bookmark news are available'}</p>
+                                <p>{language == 'hi' ? 'कोई समाचार उपलब्ध नहीं हैं' : 'No news are available'}</p>
                                 <Link to={`${language}/general`}>Load News</Link>
                             </div>
                             :
                             <>
-                                {/* Filter controls - hide for stocks category */}
-                                {params.category !== "stocks" && (
+                                {/* Category title for custom categories */}
+                                {isCustomOnlyCategory && (
+                                    <div className="category-title">
+                                        <h2>{formatCategoryName(params.category)} News</h2>
+                                    </div>
+                                )}
+                            
+                                {/* Filter controls - show for non-custom-only categories */}
+                                {!isCustomOnlyCategory && (
                                     <div className="filter-controls">
                                         <button 
                                             className={`filter-btn ${filter === "all" ? "active" : ""}`} 
@@ -768,7 +810,7 @@ const News = () => {
                                         {
                                             lodingBtn ? <Spinner />
                                                 :
-                                                displayLoadMore && filter === "all" && params.category !== "stocks" && 
+                                                displayLoadMore && filter === "all" && !isCustomOnlyCategory && 
                                                 <button className="load-more" onClick={loadMoreArticles}>Load More</button>
                                         }
                                     </>
