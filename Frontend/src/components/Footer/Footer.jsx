@@ -21,7 +21,7 @@ const Footer = () => {
                             <div className="copyright">
                                 <b>Inshorts Clone</b>
                                 <br />
-                                Created by <a className="creator" href='https://www.linkedin.com/in/lavesh-vyas/' target='_blank'>Lavesh Vyas</a>
+                                Created by <a className="creator" href='https://www.linkedin.com/company/tickershorts' target='_blank'>Lavesh Vyas</a>
                                 <br />
                                 ©COPYRIGHT 2025
                             </div>
@@ -30,7 +30,7 @@ const Footer = () => {
                         <span className="divider"></span>
 
                         <div className="container">
-                            <a href="mailto:laveshvyas20@gmail.com"><img src={contact} alt="Contact Us" /></a>
+                            <a href="mailto:tickershorts@gmail.com"><img src={contact} alt="Contact Us" /></a>
 
                             <div className="terms-condition">
                                 <a href="https://inshorts.com/tnc" target="_blank">Terms & conditions</a>
@@ -40,11 +40,13 @@ const Footer = () => {
                     </div>
 
                     <div className="right-part">
-                        <a href='#' target='_blank'><i className="fa-brands fa-linkedin-in"></i></a>
-                        <a href='#' target='_blank'><i className="fa-brands fa-github"></i></a>
-                        <a href='#' target='_blank'><i className="fa-brands fa-x-twitter"></i></a>
-                        <a href='#' target='_blank'><i className="fa-brands fa-instagram"></i></a>
+                        <a href='https://www.linkedin.com/company/tickershorts' target='_blank'><i className="fa-brands fa-linkedin-in"></i></a>
+                        <a href='https://whatsapp.com/channel/0029Vb1rtJ27T8bXkDv4m727' target='_blank'><i className="fa-brands fa-whatsapp"></i></a>
+                        <a href='https://x.com/tickershorts' target='_blank'><i className="fa-brands fa-x-twitter"></i></a>
+                        <a href='https://www.instagram.com/tickershorts?igsh=a2g4cXRyamJlNXRv' target='_blank'><i className="fa-brands fa-instagram"></i></a>
                         <a href='#' target='_blank'><i className="fa-brands fa-facebook-f"></i></a>
+                        <a href='https://docs.google.com/forms/d/e/1FAIpQLSfJdbQUxpPbS4BvANn2Q0l8EhKULuUYNXWemhOleoTMUUmhqA/viewform?usp=header' target='_blank'><i className="fa-regular fa-comment-dots"></i></a>
+                        
                     </div>
                 </div>}
         </footer>
