@@ -11,7 +11,7 @@ const Footer = () => {
     return (
         <footer className={`footer-container ${isMobileDevice && "mobile-footer-container"} ${hideHeader && "hide-footer"}`}>
             {isMobileDevice ?
-                <div className="footer">Created by <a className="creator" href="https://www.linkedin.com/in/dipayanmaji/" target="_blank">DipAYAN</a></div>
+                <div className="footer">Created by <a className="creator" href="https://www.linkedin.com/company/tickershorts" target="_blank">Sidhaant</a></div>
                 :
                 <div className="footer">
                     <div className="left-part">
@@ -19,7 +19,7 @@ const Footer = () => {
                             <img src={logo} alt="Inshorts Clone" className="logo" />
 
                             <div className="copyright">
-                                <b>Inshorts Clone</b>
+                                <b>TickerShorts</b>
                                 <br />
                                 Created by <a className="creator" href='https://www.linkedin.com/company/tickershorts' target='_blank'>Sidhaant Jain</a>
                                 <br />
