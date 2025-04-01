@@ -337,22 +337,6 @@ function BlogList() {
     fetchBlogs();
   }, []);
 
-  // Improved image URL handler with better fallback strategy
-  const getImageUrl = (imagePath) => {
-    // If no image path is provided, return a placeholder
-    if (!imagePath) return 'https://via.placeholder.com/350x200?text=No+Image';
-    
-    // If the image path already starts with http/https, use it directly
-    if (imagePath.startsWith('http')) return imagePath;
-    
-    // For relative paths, make sure we have a properly formatted URL
-    // First, ensure the path starts with a slash if it doesn't already
-    const normalizedPath = imagePath.startsWith('/') ? imagePath : `/${imagePath}`;
-    
-    // Then join it with the API base URL
-    return `${API_BASE_URL}${normalizedPath}`;
-  };
-
   // Filter and sort blogs whenever filter criteria change
   useEffect(() => {
     let result = [...blogs];
@@ -408,6 +392,20 @@ function BlogList() {
       <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
     </div>
   );
+
+  const getImageUrl = (imagePath) => {
+    // If no image path is provided, return a data URI placeholder instead of an external URL
+    if (!imagePath) return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzUwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzUwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2VlZWVlZSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiM5OTk5OTkiPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg==';
+    
+    // If the image path already starts with http/https, use it directly
+    if (imagePath.startsWith('http')) return imagePath;
+    
+    // For relative paths, make sure we have a properly formatted URL
+    const normalizedPath = imagePath.startsWith('/') ? imagePath : `/${imagePath}`;
+    
+    // Then join it with the API base URL
+    return `${API_BASE_URL}${normalizedPath}`;
+  };
   
   if (error) return (
     <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mx-4 my-6">
@@ -533,15 +531,16 @@ function BlogList() {
               }}
             >
               <div className="h-48 w-full overflow-hidden">
-                <img
-                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                  src={getImageUrl(blog.coverImage)}
-                  alt={blog.title}
-                  onError={(e) => {
-                    console.log("Image failed to load:", e.target.src);
-                    e.target.onerror = null;
-                    e.target.src = 'https://via.placeholder.com/350x200?text=Image+Not+Found';
-                  }}
+              <img
+                   className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                   src={getImageUrl(blog.coverImage)}
+                    alt={blog.title}
+                   onError={(e) => {
+                   console.log("Image failed to load:", e.target.src);
+                     e.target.onerror = null;
+                    // Use a data URI SVG as fallback instead of an external service
+                    e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzUwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzUwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2YyZjJmMiIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiM5OTk5OTkiPkltYWdlIE5vdCBGb3VuZDwvdGV4dD48L3N2Zz4=';
+                     }}
                 />
               </div>
               
