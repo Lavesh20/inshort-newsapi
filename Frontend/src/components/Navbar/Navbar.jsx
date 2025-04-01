@@ -12,8 +12,6 @@ const mainCategories = [
     { "english": "Sports", "hindi": "खेल" },
     { "english": "Technology", "hindi": "तकनीकी" },
     { "english": "Stocks", "hindi": "शेयरों" },
-    { "english": "Corporate News", "hindi": "कॉर्पोरेट समाचार" },
-    { "english": "Policy & Regulations", "hindi": "नीति और विनियम" },
     { "english": "Pharma", "hindi": "फार्मा" },
     { "english": "Banking", "hindi": "बैंकिंग" },
     { "english": "Automobile", "hindi": "ऑटोमोबाइल" },
