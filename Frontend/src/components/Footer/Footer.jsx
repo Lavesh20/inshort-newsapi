@@ -21,7 +21,7 @@ const Footer = () => {
                             <div className="copyright">
                                 <b>Inshorts Clone</b>
                                 <br />
-                                Created by <a className="creator" href='https://www.linkedin.com/company/tickershorts' target='_blank'>Lavesh Vyas</a>
+                                Created by <a className="creator" href='https://www.linkedin.com/company/tickershorts' target='_blank'>Sidhaant Jain</a>
                                 <br />
                                 ©COPYRIGHT 2025
                             </div>
