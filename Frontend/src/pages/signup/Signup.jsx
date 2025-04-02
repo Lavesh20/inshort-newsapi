@@ -244,7 +244,8 @@ import axios from "axios";
 import { EyeIcon, EyeOffIcon, CheckCircleIcon, XCircleIcon } from "lucide-react";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { initializeApp } from "firebase/app";
-
+import { useNavigate } from "react-router";
+const navigate  = useNavigate();
 const firebaseConfig = {
   apiKey: "AIzaSyAMef9ImfFN6_i_0zsfXL96GzuJQFCkuYs",
   authDomain: "ticker-shorts.firebaseapp.com",
@@ -294,6 +295,7 @@ const SignUpPage = () => {
 
       console.log("Google signup successful:", response.data);
       alert("Google signup successful!");
+      navigate('/en/blogs');
     } catch (error) {
       console.error("Google signup failed:", error.message);
       alert("Google signup failed.");
