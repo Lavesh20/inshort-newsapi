@@ -295,7 +295,7 @@ const SignUpPage = () => {
 
       console.log("Google signup successful:", response.data);
       alert("Google signup successful!");
-      navigate('/en/blogs');
+      navigate('/en/general');
     } catch (error) {
       console.error("Google signup failed:", error.message);
       alert("Google signup failed.");
