@@ -29,10 +29,14 @@ const AdminDashboard = () => {
           <h2 onClick={goingBlog}>Add Blogs/Articles</h2>
           <p>View and manage all blog/articles.</p>
         </div>
-        {/* <div className="dashboard-card">
-          <h2>Analytics</h2>
-          <p>View website analytics and reports.</p>
-        </div> */}
+         <div className="dashboard-card">
+          <h2>News</h2>
+          <p>Get all news</p>
+        </div> 
+        <div className="dashboard-card">
+          <h2>Blogs</h2>
+          <p>Get all Blogs</p>
+        </div> 
       </div>
     </div>
   );
