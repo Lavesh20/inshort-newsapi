@@ -269,7 +269,8 @@ const SignUpPage = () => {
     password: "",
     agreeToTerms: false,
   });
-  const navigate  = useNavigate();
+    const navigate = useNavigate();
+  
   // Handle Manual Signup
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -277,6 +278,7 @@ const SignUpPage = () => {
       const response = await axios.post("https://inshorts-backend-xce7.onrender.com/api/user/register", formData);
       console.log("Signup successful:", response.data);
       alert("Account created successfully!");
+      navigate('/en/login');
     } catch (error) {
       console.error("Signup failed:", error.response?.data || error.message);
       alert(error.response?.data?.message || "Signup failed. Try again.");
@@ -294,8 +296,8 @@ const SignUpPage = () => {
       });
 
       console.log("Google signup successful:", response.data);
-      alert("Google signup successful!");
-      navigate('/en/general');
+      navigate('/en/login');
+      
     } catch (error) {
       console.error("Google signup failed:", error.message);
       alert("Google signup failed.");
