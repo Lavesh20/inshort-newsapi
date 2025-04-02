@@ -18,7 +18,7 @@ const mainCategories = [
     { "english": "FMCG", "hindi": "एफएमसीजी" },
     { "english": "Power", "hindi": "ऊर्जा" },
     { "english": "IPO", "hindi": "आईपीओ" },
-    { "english": "Cryptocurrencies", "hindi": "क्रिप्टोकरेंसी" }
+    { "english": "Cryptocurrencies", "hindi": "क्रिप्टोकरेंसी" },
 ];
 
 const Navbar = ({ displayNavbar, setDisplayNavbar }) => {

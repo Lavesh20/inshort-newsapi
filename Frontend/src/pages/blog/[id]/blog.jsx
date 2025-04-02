@@ -591,6 +591,8 @@
 // }
 
 
+"use client"
+
 import { useEffect, useState, useRef } from "react"
 import { useParams, Link, useNavigate } from "react-router-dom"
 import axios from "axios"
@@ -606,21 +608,21 @@ var BlogPost = {
     name: String,
     image: String,
     bio: String,
-    company: String
+    company: String,
   },
   createdAt: String,
   categories: Array,
-  tableOfContents: Array
+  tableOfContents: Array,
 }
 
-var RecentBlog = { 
+var RecentBlog = {
   id: String,
   title: String,
   excerpt: String,
   coverImage: String,
   category: String,
   readTime: String,
-  createdAt: String
+  createdAt: String,
 }
 
 export default function BlogDetail() {
@@ -635,34 +637,32 @@ export default function BlogDetail() {
   // Define API base URL
   const API_BASE_URL = "https://inshorts-backend-xce7.onrender.com"
 
-  
   useEffect(() => {
-    const token = localStorage.getItem('jwtToken')
+    const token = localStorage.getItem("jwtToken")
     if (!token) {
       alert("You are not Authorized , first sign up or sign in")
-      navigate('/en/login')
+      navigate("/en/login")
     }
-
   }, [])
 
   // Calculate reading time
   const calculateReadingTime = (content) => {
-    if (!content) return "5 min read";
-  
-    let wordCount = 0;
-  
+    if (!content) return "5 min read"
+
+    let wordCount = 0
+
     if (Array.isArray(content)) {
       content.forEach((section) => {
         if (typeof section === "string") {
-          wordCount += section.split(/\s+/).length;
+          wordCount += section.split(/\s+/).length
         } else if (Array.isArray(section.paragraphs)) {
           section.paragraphs.forEach((para) => {
-            wordCount += para.split(/\s+/).length;
-          });
+            wordCount += para.split(/\s+/).length
+          })
         } else if (typeof section.text === "string") {
-          wordCount += section.text.split(/\s+/).length;
+          wordCount += section.text.split(/\s+/).length
         }
-      });
+      })
     }
 
     // Average reading speed: 200 words per minute
@@ -731,6 +731,79 @@ export default function BlogDetail() {
       .catch((err) => {
         console.error("Failed to copy: ", err)
       })
+  }
+
+  // Function to render content with HTML support
+  const renderContent = (content) => {
+    if (typeof content === "string") {
+      return <div dangerouslySetInnerHTML={{ __html: content }} />
+    } else if (content.type === "image" && content.src) {
+      return (
+        <div className="my-6">
+          <img
+            src={content.src.startsWith("http") ? content.src : `${API_BASE_URL}${content.src}`}
+            alt={content.alt || "Blog image"}
+            className="w-full rounded-lg"
+          />
+          {content.caption && <p className="text-sm text-gray-500 mt-2 text-center">{content.caption}</p>}
+        </div>
+      )
+    } else if (content.type === "table" && content.data) {
+      return (
+        <div className="my-6 overflow-x-auto">
+          <table className="min-w-full divide-y divide-gray-200 border">
+            {content.headers && (
+              <thead className="bg-gray-50">
+                <tr>
+                  {content.headers.map((header, idx) => (
+                    <th
+                      key={idx}
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-r last:border-r-0"
+                    >
+                      {header}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+            )}
+            <tbody className="bg-white divide-y divide-gray-200">
+              {content.data.map((row, rowIdx) => (
+                <tr key={rowIdx} className={rowIdx % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                  {row.map((cell, cellIdx) => (
+                    <td
+                      key={cellIdx}
+                      className="px-6 py-4 whitespace-normal text-sm text-gray-500 border-r last:border-r-0"
+                    >
+                      <div dangerouslySetInnerHTML={{ __html: cell }} />
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )
+    } else if (content.type === "list" && Array.isArray(content.items)) {
+      return content.ordered ? (
+        <ol className="list-decimal pl-6 my-4 space-y-2">
+          {content.items.map((item, idx) => (
+            <li key={idx} className="text-gray-700">
+              <div dangerouslySetInnerHTML={{ __html: item }} />
+            </li>
+          ))}
+        </ol>
+      ) : (
+        <ul className="list-disc pl-6 my-4 space-y-2">
+          {content.items.map((item, idx) => (
+            <li key={idx} className="text-gray-700">
+              <div dangerouslySetInnerHTML={{ __html: item }} />
+            </li>
+          ))}
+        </ul>
+      )
+    }
+
+    return null
   }
 
   if (loading) {
@@ -840,23 +913,42 @@ export default function BlogDetail() {
                       <div className="mb-12" key={index} id={`section-${index + 1}`}>
                         <h2 className="text-2xl font-bold text-gray-900 mb-4 scroll-mt-20">{section.title}</h2>
                         {section.paragraphs.map((paragraph, pIndex) => (
-                          <p key={pIndex} className="text-gray-700 mb-4 leading-relaxed">
-                            {paragraph}
-                          </p>
+                          <div key={pIndex} className="text-gray-700 mb-4 leading-relaxed">
+                            <div dangerouslySetInnerHTML={{ __html: paragraph }} />
+                          </div>
                         ))}
+                        {section.images &&
+                          section.images.map((image, imgIndex) => (
+                            <div key={`img-${imgIndex}`} className="my-6">
+                              <img
+                                src={image.src.startsWith("http") ? image.src : `${API_BASE_URL}${image.src}`}
+                                alt={image.alt || `Image ${imgIndex + 1}`}
+                                className="w-full rounded-lg"
+                              />
+                              {image.caption && (
+                                <p className="text-sm text-gray-500 mt-2 text-center">{image.caption}</p>
+                              )}
+                            </div>
+                          ))}
                       </div>
                     )
                   } else if (typeof section === "string") {
                     return (
-                      <p key={index} className="text-gray-700 mb-4 leading-relaxed">
-                        {section}
-                      </p>
+                      <div key={index} className="text-gray-700 mb-4 leading-relaxed">
+                        <div dangerouslySetInnerHTML={{ __html: section }} />
+                      </div>
                     )
                   } else if (typeof section === "object" && section.text) {
                     return (
-                      <p key={index} className="text-gray-700 mb-4 leading-relaxed">
-                        {section.text}
-                      </p>
+                      <div key={index} className="text-gray-700 mb-4 leading-relaxed">
+                        <div dangerouslySetInnerHTML={{ __html: section.text }} />
+                      </div>
+                    )
+                  } else if (typeof section === "object") {
+                    return (
+                      <div key={index} className="mb-6">
+                        {renderContent(section)}
+                      </div>
                     )
                   }
                   return null
@@ -1101,11 +1193,8 @@ function BlogLoadingSkeleton() {
               </div>
               <div className="space-y-4">
                 <div className="h-8 w-40 bg-gray-200 animate-pulse"></div>
-                <div className="grid grid-cols-2 gap-2">
-                  <div className="h-10 w-full bg-gray-200 animate-pulse"></div>
-                  <div className="h-10 w-full bg-gray-200 animate-pulse"></div>
-                </div>
-                <div className="h-10 w-full bg-gray-200 animate-pulse"></div>
+                <div className="h-8 w-full bg-gray-200 animate-pulse"></div>
+                <div className="h-8 w-full bg-gray-200 animate-pulse"></div>
               </div>
             </div>
           </div>
@@ -1172,6 +1261,8 @@ function BlogNotFound() {
     </div>
   )
 }
+
+
 
 
 
