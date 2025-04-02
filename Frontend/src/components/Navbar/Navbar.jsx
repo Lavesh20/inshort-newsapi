@@ -4,13 +4,6 @@ import { NavLink } from "react-router-dom";
 import { MyContext } from "../../CustomContext";
 
 const mainCategories = [
-    { "english": "National", "hindi": "भारत" },
-    { "english": "Business", "hindi": "बिज़नेस" },
-    { "english": "Entertainment", "hindi": "मनोरंजन" },
-    { "english": "Health", "hindi": "स्वास्थ्य" },
-    { "english": "Science", "hindi": "विज्ञान" },
-    { "english": "Sports", "hindi": "खेल" },
-    { "english": "Technology", "hindi": "तकनीकी" },
     { "english": "Stocks", "hindi": "शेयरों" },
     { "english": "Pharma", "hindi": "फार्मा" },
     { "english": "Banking", "hindi": "बैंकिंग" },
@@ -19,6 +12,14 @@ const mainCategories = [
     { "english": "Power", "hindi": "ऊर्जा" },
     { "english": "IPO", "hindi": "आईपीओ" },
     { "english": "Cryptocurrencies", "hindi": "क्रिप्टोकरेंसी" },
+    { "english": "National", "hindi": "भारत" },
+    { "english": "Business", "hindi": "बिज़नेस" },
+    { "english": "Entertainment", "hindi": "मनोरंजन" },
+    { "english": "Health", "hindi": "स्वास्थ्य" },
+    { "english": "Science", "hindi": "विज्ञान" },
+    { "english": "Sports", "hindi": "खेल" },
+    { "english": "Technology", "hindi": "तकनीकी" }
+    
 ];
 
 const Navbar = ({ displayNavbar, setDisplayNavbar }) => {
