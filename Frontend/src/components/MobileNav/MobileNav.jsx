@@ -156,6 +156,20 @@ import technology from '../../utilities/images/categories/technology.webp';
 
 const mainCategories = [
     {
+        english: "Stocks",
+         hindi: "शेयरों"
+   },
+    { 
+        "english": "Pharma",
+       "hindi": "फार्मा" 
+    },
+   { "english": "Banking", "hindi": "बैंकिंग" },
+   { "english": "Automobile", "hindi": "ऑटोमोबाइल" },
+   { "english": "FMCG", "hindi": "एफएमसीजी" },
+   { "english": "Power", "hindi": "ऊर्जा" },
+   { "english": "IPO", "hindi": "आईपीओ" },
+   { "english": "Cryptocurrencies", "hindi": "क्रिप्टोकरेंसी" },
+    {
         english: "National",
         hindi: "भारत",
         imageUrl: india
@@ -190,10 +204,7 @@ const mainCategories = [
         hindi: "तकनीकी",
         imageUrl: technology
     },
-    {
-         english: "Stocks",
-          hindi: "शेयरों"
-    }
+    
 ];
 
 const MobileNav = ({ mobileRef }) => {
