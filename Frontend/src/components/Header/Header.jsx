@@ -108,6 +108,20 @@ import { MyContext } from "../../CustomContext";
 
 const categories = [
     {
+        english: "Stocks",
+         hindi: "शेयरों"
+   },
+   { 
+    "english": "Pharma",
+   "hindi": "फार्मा" 
+},
+{ "english": "Banking", "hindi": "बैंकिंग" },
+{ "english": "Automobile", "hindi": "ऑटोमोबाइल" },
+{ "english": "FMCG", "hindi": "एफएमसीजी" },
+{ "english": "Power", "hindi": "ऊर्जा" },
+{ "english": "IPO", "hindi": "आईपीओ" },
+{ "english": "Cryptocurrencies", "hindi": "क्रिप्टोकरेंसी" },
+    {
         english: "General",
         hindi: "ख़ास ख़बरें"
     },
@@ -146,11 +160,8 @@ const categories = [
     {
         english: "Bookmarks",
         hindi: "बुकमार्क"
-    },
-    {
-         english: "Stocks",
-          hindi: "शेयरों"
     }
+   
 ];
 
 const Header = () => {
