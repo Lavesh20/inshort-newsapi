@@ -75,7 +75,7 @@ const NewsArticle = ({ article, bookmarkMsgHandler }) => {
         <div className={`news-article ${isMobileDevice && "mobile-news-article"}`} onClick={articleHandler} style={{ height: isMobileDevice && windowHeight }}>
             <BackgroundImage
                 className={"article-image"}
-                src={article.photo}
+                src={article.photo }
 
                 // src = {article.image}
                 lazyLoad
@@ -97,7 +97,7 @@ const NewsArticle = ({ article, bookmarkMsgHandler }) => {
 
                 <section>
                     <span>To see the full image</span><br />
-                    <a href={article.photo} target="_blank" className="image-link">Tap here</a>
+                    <a href={article.urlToImage || article.image} target="_blank" className="image-link">Tap here</a>
 
                 </section>
 
