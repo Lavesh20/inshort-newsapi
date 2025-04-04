@@ -126,10 +126,10 @@ const NewsArticle = ({ article, bookmarkMsgHandler }) => {
     const imgRef = useRef(null);
 
     const myContext = useContext(MyContext);
-    const { 
-        language, isMobileDevice, hideHeader, setHideHeader, windowHeight, 
-        articles, hindiBookmarkArticles, setHindiBookmarkArticles, 
-        englishBookmarkArticles, setEnglishBookmarkArticles 
+    const {
+        language, isMobileDevice, hideHeader, setHideHeader, windowHeight,
+        articles, hindiBookmarkArticles, setHindiBookmarkArticles,
+        englishBookmarkArticles, setEnglishBookmarkArticles
     } = myContext;
 
     const { hours, minutes, meridiem, day, date, month, year } = getDate(article?.publishedAt || new Date());
@@ -143,12 +143,10 @@ const NewsArticle = ({ article, bookmarkMsgHandler }) => {
 
         const updateBookmarks = (bookmarks, setBookmarks) => {
             if (isBookmark) {
-                // Remove from bookmarks
                 setIsBookmark(false);
                 bookmarkMsgHandler("Bookmark Removed");
                 setBookmarks(bookmarks.filter(eachArticle => eachArticle.title !== article.title));
             } else {
-                // Add to bookmarks
                 setIsBookmark(true);
                 bookmarkMsgHandler("News Bookmarked");
                 setBookmarks([...bookmarks, article]);
@@ -162,34 +160,31 @@ const NewsArticle = ({ article, bookmarkMsgHandler }) => {
         }
     };
 
-    // Set correct image URL
+    // Set proper image URL from available sources
     useEffect(() => {
-        if (article.photo) {
-            console.log("Using photo URL:", article.photo);
-            setImageUrl(article.photo);
-        } else if (article.urlToImage) {
-            console.log("Using urlToImage:", article.urlToImage);
-            setImageUrl(article.urlToImage);
-        } else if (article.image) {
-            console.log("Using image field:", article.image);
-            setImageUrl(article.image);
-        } else {
-            console.log("No image found, using placeholder");
-            setImageUrl('https://via.placeholder.com/800x400?text=No+Image+Available');
-        }
+        const fallback = 'https://via.placeholder.com/800x400?text=No+Image+Available';
+
+        const url =
+            article?.photo?.startsWith('http') ? article.photo :
+            article?.urlToImage?.startsWith('http') ? article.urlToImage :
+            article?.image?.startsWith('http') ? article.image :
+            fallback;
+
+        console.log("Final image URL:", url);
+        setImageUrl(url);
     }, [article]);
 
-    // Check if article is already bookmarked
+    // Check if already bookmarked
     useEffect(() => {
-        const isArticleBookmarked = (language === 'hi' ? hindiBookmarkArticles : englishBookmarkArticles)
+        const bookmarked = (language === 'hi' ? hindiBookmarkArticles : englishBookmarkArticles)
             .some(eachArticle => eachArticle.title === article.title);
-        setIsBookmark(isArticleBookmarked);
+        setIsBookmark(bookmarked);
     }, [articles, language, hindiBookmarkArticles, englishBookmarkArticles]);
 
     return (
         <div className={`news-article ${isMobileDevice ? "mobile-news-article" : ""}`} onClick={articleHandler} style={{ height: isMobileDevice ? windowHeight : 'auto' }}>
             
-            {/* Image Handling */}
+            {/* Image Rendering */}
             {!imageError ? (
                 <BackgroundImage
                     className="article-image"
@@ -214,7 +209,7 @@ const NewsArticle = ({ article, bookmarkMsgHandler }) => {
                 />
             )}
 
-            {/* Absolute img fallback */}
+            {/* Absolute fallback image */}
             {imageError && (
                 <img
                     ref={imgRef}
