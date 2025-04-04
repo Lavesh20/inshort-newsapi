@@ -22,6 +22,8 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import { SignIn, SignUp } from '@clerk/clerk-react';
 import LoginPage from './pages/login/login';
 import NewsAdminDashboard from './pages/getAllNews/GetAllNews';
+import TermsOfService from './pages/termsAndService/TermsAndService';
+import PrivacyPolicy from './pages/termsAndService/PrivacyPolicy';
 
 
 
@@ -80,6 +82,8 @@ function App() {
             <Route path={'/hi/blogs/:blogId'} element={<BlogDetail blogs={sampleBlogs} />} />
             <Route path={'/en/customblog'} element={<AdminBlogEditor/>} />
             <Route path={'/en/getallnews'} element={<NewsAdminDashboard />} />
+            <Route path={'/en/termsofservice'} element={<TermsOfService />} />
+            <Route path={'/en/privacypolicy'} element={<PrivacyPolicy />} />
             <Route path={'*'} element={<News />} />
           </Routes>
         </Slider>
@@ -105,6 +109,8 @@ function App() {
             <Route path={'/hi/blogs'} element={<Blog />} />
             <Route path={'/hi/blogs/:blogId'} element={<BlogDetail blogs={sampleBlogs} />} />
             <Route path={'/en/getallnews'} element={<NewsAdminDashboard />} />
+            <Route path={'/en/termsofservice'} element={<TermsOfService />} />
+            <Route path={'/en/privacypolicy'} element={<PrivacyPolicy />} />
             <Route path={'*'} element={<News />} />
           </Routes>
           <Footer />

@@ -33,8 +33,8 @@ const Footer = () => {
                             <a href="mailto:tickershorts@gmail.com"><img src={contact} alt="Contact Us" /></a>
 
                             <div className="terms-condition">
-                                <a href="https://inshorts.com/tnc" target="_blank">Terms & conditions</a>
-                                <a href="https://inshorts.com/tnc" target="_blank">Privacy Policies</a>
+                                <a href="/en/termsofservice" target="_blank">Terms & conditions</a>
+                                <a href="/en/privacypolicy" target="_blank">Privacy Policies</a>
                             </div>
                         </div>
                     </div>
