@@ -75,7 +75,7 @@ const NewsArticle = ({ article, bookmarkMsgHandler }) => {
         <div className={`news-article ${isMobileDevice && "mobile-news-article"}`} onClick={articleHandler} style={{ height: isMobileDevice && windowHeight }}>
             <BackgroundImage
                 className={"article-image"}
-                src={article.urlToImage || article.image}
+                src={article.photo || article.image}
 
                 // src = {article.image}
                 lazyLoad
