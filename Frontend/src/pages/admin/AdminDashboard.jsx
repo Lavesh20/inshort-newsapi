@@ -15,6 +15,11 @@ const AdminDashboard = () => {
     console.log("clicked")
     navigate('/en/customblog')  
   }
+
+  const getallnews = ()=>{
+    console.log("clicked")
+    navigate('/en/getallnews')
+  }
   
   return (
     <div className="admin-dashboard-container">
@@ -29,7 +34,7 @@ const AdminDashboard = () => {
           <h2 onClick={goingBlog}>Add Blogs/Articles</h2>
           <p>View and manage all blog/articles.</p>
         </div>
-         <div className="dashboard-card">
+         <div className="dashboard-card" onClick={getallnews}>
           <h2>News</h2>
           <p>Get all news</p>
         </div> 

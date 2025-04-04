@@ -196,61 +196,87 @@ exports.getNewsByCategory = async (req, res) => {
 };
 
 // 📝 Update News with Image Upload (if provided)
+// Update a news article
 exports.updateNews = async (req, res) => {
   try {
     const { id } = req.params;
     let updatedFields = req.body;
-
+    
+    // If a new photo is uploaded
     if (req.file) {
       updatedFields.photo = `/uploads/${req.file.filename}`;
+      
+      // Delete old photo if exists
+      const existingNews = await CustomNews.findById(id);
+      if (existingNews && existingNews.photo) {
+        const oldPhotoPath = path.join(__dirname, '..', existingNews.photo);
+        if (fs.existsSync(oldPhotoPath)) {
+          fs.unlinkSync(oldPhotoPath);
+        }
+      }
     }
-
-    const updatedNews = await CustomNews.findByIdAndUpdate(id, updatedFields, { new: true });
-
-    if (!updatedNews) return res.status(404).json({ message: "News not found" });
-
-    res.status(200).json({ message: "News updated successfully", updatedNews });
+    
+    // Add updatedAt timestamp
+    updatedFields.updatedAt = Date.now();
+    
+    // Update news article
+    const updatedNews = await CustomNews.findByIdAndUpdate(
+      id,
+      updatedFields,
+      { new: true }
+    );
+    
+    if (!updatedNews) {
+      return res.status(404).json({ message: 'News not found' });
+    }
+    
+    res.status(200).json({
+      message: 'News updated successfully',
+      updatedNews
+    });
   } catch (error) {
     console.error("Error updating news:", error);
     res.status(500).json({ message: error.message });
   }
 };
 
-// ❌ Delete News (Deletes Image too)
+// Delete News (Deletes Image too)
 exports.deleteNews = async (req, res) => {
   try {
     const { id } = req.params;
     const news = await CustomNews.findById(id);
-
-    if (!news) return res.status(404).json({ message: "News not found" });
-
+    
+    if (!news) {
+      return res.status(404).json({ message: 'News not found' });
+    }
+    
     // Delete image file from server if it exists
     if (news.photo) {
-      const imagePath = path.join(__dirname, "..", news.photo);
+      const imagePath = path.join(__dirname, '..', news.photo);
       if (fs.existsSync(imagePath)) {
         fs.unlinkSync(imagePath);
       }
     }
-
+    
     await news.deleteOne();
-    res.status(200).json({ message: "News deleted successfully" });
+    res.status(200).json({ message: 'News deleted successfully' });
   } catch (error) {
     console.error("Error deleting news:", error);
     res.status(500).json({ message: error.message });
   }
 };
 
-// 📢 Get All Custom News (No Category Filter)
-exports.getAllCustomNews = async (req, res) => {
+// Get All Custom News (No Category Filter)
+exports.getAllNews = async (req, res) => {
   try {
-    const news = await CustomNews.find();
+    const news = await CustomNews.find().sort({ createdAt: -1 });
     
     console.log("Fetched News:", news.length, "items"); // Debugging output
-
+    
     if (news.length === 0) {
       console.log("No news found in database.");
     }
-
+    
     res.status(200).json(news);
   } catch (error) {
     console.error("Error fetching all news:", error);
