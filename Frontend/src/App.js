@@ -24,6 +24,7 @@ import LoginPage from './pages/login/login';
 import NewsAdminDashboard from './pages/getAllNews/GetAllNews';
 import TermsOfService from './pages/termsAndService/TermsAndService';
 import PrivacyPolicy from './pages/termsAndService/PrivacyPolicy';
+import AdminBlogManagement from './pages/getAllBlogs/GetAllBlogs';
 
 
 
@@ -82,6 +83,7 @@ function App() {
             <Route path={'/hi/blogs/:blogId'} element={<BlogDetail blogs={sampleBlogs} />} />
             <Route path={'/en/customblog'} element={<AdminBlogEditor/>} />
             <Route path={'/en/getallnews'} element={<NewsAdminDashboard />} />
+            <Route path={'/en/getallblogs'} element={<AdminBlogManagement />} />
             <Route path={'/en/termsofservice'} element={<TermsOfService />} />
             <Route path={'/en/privacypolicy'} element={<PrivacyPolicy />} />
             <Route path={'*'} element={<News />} />
@@ -109,6 +111,7 @@ function App() {
             <Route path={'/hi/blogs'} element={<Blog />} />
             <Route path={'/hi/blogs/:blogId'} element={<BlogDetail blogs={sampleBlogs} />} />
             <Route path={'/en/getallnews'} element={<NewsAdminDashboard />} />
+            <Route path={'/en/getallblogs'} element={<AdminBlogManagement />} />
             <Route path={'/en/termsofservice'} element={<TermsOfService />} />
             <Route path={'/en/privacypolicy'} element={<PrivacyPolicy />} />
             <Route path={'*'} element={<News />} />
