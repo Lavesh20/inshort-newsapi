@@ -164,6 +164,13 @@ const NewsArticle = ({ article, bookmarkMsgHandler }) => {
 
   // Set proper image URL from available sources
   useEffect(() => {
+
+    console.log("Article received in NewsArticle:", article);
+  console.log("Available image fields:", {
+    photo: article.photo,
+    image: article.image,
+    urlToImage: article.urlToImage
+  });
     // Define a fallback image
     const fallback = 'https://via.placeholder.com/800x400?text=No+Image+Available';
     

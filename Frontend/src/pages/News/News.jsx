@@ -542,23 +542,24 @@ const News = () => {
                 if (customArticles && customArticles.length > 0) {
                     // Make sure custom news format matches what NewsArticle component expects
                     const formattedCustomArticles = customArticles.map(article => {
+                        console.log("Original backend article:", article); // Add this for debugging
+                        
                         return {
-                            title: article.title || 'No Title',
-                            description: article.description || 'No Description',
-                            url: article.url || '#',
-                            // Ensure the image is properly formatted
-                            image: article.image && !article.image.startsWith("http")
-                            ? `${CUSTOM_NEWS_API}${article.image.trim()}`  // Convert relative to absolute
-                            : article.image || '/default-image.jpg', // Fallback image
-                            publishedAt: article.publishedAt || article.createdAt || new Date().toISOString(),
-                            source: {
-                                name: article.source?.name || article.by || 'Custom News',
-                                url: article.source?.url || '#'
-                            },
-                            isCustom: true
+                          title: article.title || 'No Title',
+                          description: article.description || 'No Description',
+                          url: article.url || '#',
+                          // Use article.photo directly since it's already a full Cloudinary URL
+                          photo: article.photo || '/default-image.jpg', // Use photo field instead of image
+                          image: article.photo || '/default-image.jpg', // Add image field as fallback
+                          urlToImage: article.photo || '/default-image.jpg', // Add urlToImage as another fallback
+                          publishedAt: article.publishedAt || article.createdAt || new Date().toISOString(),
+                          source: {
+                            name: article.source?.name || article.by || 'Custom News',
+                            url: article.source?.url || '#'
+                          },
+                          isCustom: true
                         };
-                    });
-                    
+                      });
                     // If custom-only category, only use custom articles
                     if (isCustomOnlyCategory) {
                         finalArticles = formattedCustomArticles;
