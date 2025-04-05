@@ -115,7 +115,7 @@
 
 // Update to NewsArticle.jsx to fix image display issues
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import './NewsArticle.scss';
 import { getDate } from "../../utilities/convertToDate";
 import { MyContext } from "../../CustomContext";
