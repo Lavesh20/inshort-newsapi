@@ -289,20 +289,20 @@ const SignUpPage = () => {
   const handleGoogleSignup = async () => {
     try {
       const result = await signInWithPopup(auth, provider);
-      const idToken = await result.user.getIdToken(); // ✅ Generate Firebase ID Token
-
+      const token = await result.user.getIdToken(); // ✅ Firebase ID token
+  
       const response = await axios.post("https://inshorts-backend-xce7.onrender.com/api/user/google-auth", {
-        idToken, // 🔹 Now using Firebase ID token
+        token, // 🔹 Match this with backend's expected key
       });
-
-      console.log("Google signup successful:", response.data);
+  
+      console.log("✅ Google signup successful:", response.data);
       navigate('/en/login');
-      
     } catch (error) {
-      console.error("Google signup failed:", error.message);
+      console.error("❌ Google signup failed:", error.response?.data || error.message);
       alert("Google signup failed.");
     }
   };
+  
 
   // Toggle Password Visibility
   const togglePasswordVisibility = () => {
