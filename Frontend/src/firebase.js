@@ -8,7 +8,7 @@ const firebaseConfig = {
     storageBucket: "ticker-shorts.firebasestorage.app",
     messagingSenderId: "399070981931",
     appId: "1:399070981931:web:3de5e513c6c2e17d2e9f6e",
-  clientId: "399070981931-5uoagh08a96t1ndd3qnd14929f4658pr.apps.googleusercontent.com"
+  // clientId: "399070981931-5uoagh08a96t1ndd3qnd14929f4658pr.apps.googleusercontent.com"
 };
 
 // Initialize Firebase
