@@ -99,7 +99,7 @@ export default function NewsViewer() {
       url: item.url || "",
       photo: null
     });
-    setPreviewUrl(item.photo ? `http://localhost:5000${item.photo}` : null);
+    setPreviewUrl(item.photo ? `https://inshorts-backend-xce7.onrender.com${item.photo}` : null);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -461,7 +461,7 @@ export default function NewsViewer() {
                     {item.photo && (
                       <div className="md:flex-shrink-0">
                         <img
-                          src={`http://localhost:5000${item.photo}`}
+                          src={`https://inshorts-backend-xce7.onrender.com${item.photo}`}
                           alt={item.title}
                           className="h-48 w-full object-cover md:h-full md:w-48"
                           loading="lazy"
