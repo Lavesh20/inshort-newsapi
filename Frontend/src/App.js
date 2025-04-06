@@ -25,6 +25,9 @@ import NewsAdminDashboard from './pages/getAllNews/GetAllNews';
 import TermsOfService from './pages/termsAndService/TermsAndService';
 import PrivacyPolicy from './pages/termsAndService/PrivacyPolicy';
 import AdminBlogManagement from './pages/getAllBlogs/GetAllBlogs';
+import { Disc } from 'lucide-react';
+import AboutUs from './pages/termsAndService/Aboutus';
+import DisclaimerComponent from './pages/termsAndService/Disclaimer';
 
 
 
@@ -86,6 +89,8 @@ function App() {
             <Route path={'/en/getallblogs'} element={<AdminBlogManagement />} />
             <Route path={'/en/termsofservice'} element={<TermsOfService />} />
             <Route path={'/en/privacypolicy'} element={<PrivacyPolicy />} />
+            <Route path={'/en/disclaimer'} element={<DisclaimerComponent/>} />
+            <Route path={'/en/aboutus'} element={<AboutUs/>} />
             <Route path={'*'} element={<News />} />
           </Routes>
         </Slider>
@@ -114,6 +119,8 @@ function App() {
             <Route path={'/en/getallblogs'} element={<AdminBlogManagement />} />
             <Route path={'/en/termsofservice'} element={<TermsOfService />} />
             <Route path={'/en/privacypolicy'} element={<PrivacyPolicy />} />
+            <Route path={'/en/disclaimer'} element={<DisclaimerComponent/>} />
+            <Route path={'/en/aboutus'} element={<AboutUs/>} />
             <Route path={'*'} element={<News />} />
           </Routes>
           <Footer />
