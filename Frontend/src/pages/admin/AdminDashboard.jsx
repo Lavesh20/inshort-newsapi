@@ -20,6 +20,11 @@ const AdminDashboard = () => {
     console.log("clicked")
     navigate('/en/getallnews')
   }
+
+  const getallBlogs = ()=>{
+    console.log("clicked")
+    navigate('/en/getallblogs')
+  }
   
   return (
     <div className="admin-dashboard-container">
@@ -38,7 +43,7 @@ const AdminDashboard = () => {
           <h2>News</h2>
           <p>Get all news</p>
         </div> 
-        <div className="dashboard-card">
+        <div className="dashboard-card" onClick={getallBlogs}>
           <h2>Blogs</h2>
           <p>Get all Blogs</p>
         </div> 
