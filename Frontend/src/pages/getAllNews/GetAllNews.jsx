@@ -1,3 +1,189 @@
+// import React, { useState, useEffect } from 'react';
+// import axios from 'axios';
+
+// const API_URL = "https://inshorts-backend-xce7.onrender.com/api/news";
+
+// export default function NewsViewer() {
+//   const [news, setNews] = useState([]);
+//   const [loading, setLoading] = useState(false);
+//   const [error, setError] = useState(null);
+//   const [successMessage, setSuccessMessage] = useState(null);
+//   const [editingId, setEditingId] = useState(null);
+//   const [previewUrl, setPreviewUrl] = useState(null);
+  
+//   // Form state for editing
+//   const [formData, setFormData] = useState({
+//     title: "",
+//     description: "",
+//     category: "",
+//     photo: null,
+//     url: ""
+//   });
+
+//   useEffect(() => {
+//     fetchNews();
+//   }, []);
+
+//   const fetchNews = async () => {
+//     try {
+//       setLoading(true);
+//       console.log("Fetching news from:", `${API_URL}/all`);
+      
+//       const res = await axios.get(`${API_URL}/all`);
+      
+//       console.log("Raw response:", res);
+//       console.log("Response data:", res.data);
+//       console.log("Response data type:", typeof res.data);
+//       console.log("Is array?", Array.isArray(res.data));
+//       console.log("Data length:", res.data?.length);
+      
+//       // Ensure we're always setting an array
+//       if (Array.isArray(res.data)) {
+//         setNews(res.data);
+//       } else if (typeof res.data === 'object' && res.data !== null) {
+//         // If API returns an object with a data property
+//         if (Array.isArray(res.data.data)) {
+//           setNews(res.data.data);
+//           console.log("Extracted news from res.data.data, found", res.data.data.length, "items");
+//         } else {
+//           // If we have an object but it's not in expected format
+//           console.warn("Response is not an array or doesn't contain array at .data property:", res.data);
+//           setNews([]);
+//         }
+//       } else {
+//         console.warn("Unexpected response format:", res.data);
+//         setNews([]);
+//       }
+//     } catch (error) {
+//       console.error("Error object:", error);
+//       if (error.response) {
+//         console.error("Response error data:", error.response.data);
+//         console.error("Response error status:", error.response.status);
+//       } else if (error.request) {
+//         console.error("No response received:", error.request);
+//       } else {
+//         console.error("Error setting up request:", error.message);
+//       }
+//       setError("Failed to fetch news. Please check console for details.");
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   const handleChange = (e) => {
+//     setFormData({ ...formData, [e.target.name]: e.target.value });
+//   };
+
+//   const handleFileChange = (e) => {
+//     const file = e.target.files[0];
+//     if (file) {
+//       setFormData({ ...formData, photo: file });
+//       setSuccessMessage("New image selected");
+//       setError(null);
+
+//       // Create preview URL
+//       const reader = new FileReader();
+//       reader.onloadend = () => {
+//         setPreviewUrl(reader.result);
+//       };
+//       reader.readAsDataURL(file);
+//     }
+//   };
+
+//   const handleEdit = (item) => {
+//     setEditingId(item._id);
+//     setFormData({
+//       title: item.title,
+//       description: item.description,
+//       category: item.category,
+//       url: item.url || "",
+//       photo: null
+//     });
+//     setPreviewUrl(item.photo ? `https://inshorts-backend-xce7.onrender.com${item.photo}` : null);
+//     window.scrollTo({ top: 0, behavior: 'smooth' });
+//   };
+
+//   const handleDelete = async (id) => {
+//     if (!window.confirm("Are you sure you want to delete this news article?")) return;
+    
+//     try {
+//       setLoading(true);
+//       const response = await axios.delete(`${API_URL}/${id}`);
+//       console.log(response.data.message);
+//       setSuccessMessage("News deleted successfully!");
+//       fetchNews();
+//     } catch (error) {
+//       setError("Failed to delete news. Please try again.");
+//       console.error("Error deleting news:", error);
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     setLoading(true);
+//     setError(null);
+//     setSuccessMessage(null);
+
+//     const form = new FormData();
+    
+//     // Add all form fields to FormData
+//     for (const key in formData) {
+//       if (formData[key] !== null) {
+//         form.append(key, formData[key]);
+//       }
+//     }
+
+//     try {
+//       // Update existing news
+//       const response = await axios.put(`${API_URL}/${editingId}`, form, {
+//         headers: {
+//           'Content-Type': 'multipart/form-data'
+//         }
+//       });
+      
+//       console.log("Update response:", response.data);
+//       setSuccessMessage("News updated successfully!");
+      
+//       // Refresh the news list
+//       await fetchNews();
+      
+//       // Reset form
+//       handleCancel();
+//     } catch (error) {
+//       setError("Failed to update news. Please try again.");
+//       console.error("Error updating news:", error);
+//       if (error.response) {
+//         console.error("Server response:", error.response.data);
+//       }
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   const handleCancel = () => {
+//     setEditingId(null);
+//     setFormData({
+//       title: "",
+//       description: "",
+//       category: "",
+//       photo: null,
+//       url: ""
+//     });
+//     setPreviewUrl(null);
+//   };
+
+//   const formatDate = (dateString) => {
+//     if (!dateString) return '';
+//     const date = new Date(dateString);
+//     return date.toLocaleDateString('en-US', {
+//       year: 'numeric',
+//       month: 'short',
+//       day: 'numeric'
+//     });
+//   };
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -10,8 +196,7 @@ export default function NewsViewer() {
   const [successMessage, setSuccessMessage] = useState(null);
   const [editingId, setEditingId] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
-  
-  // Form state for editing
+
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -27,44 +212,19 @@ export default function NewsViewer() {
   const fetchNews = async () => {
     try {
       setLoading(true);
-      console.log("Fetching news from:", `${API_URL}/all`);
-      
       const res = await axios.get(`${API_URL}/all`);
-      
-      console.log("Raw response:", res);
-      console.log("Response data:", res.data);
-      console.log("Response data type:", typeof res.data);
-      console.log("Is array?", Array.isArray(res.data));
-      console.log("Data length:", res.data?.length);
-      
-      // Ensure we're always setting an array
-      if (Array.isArray(res.data)) {
-        setNews(res.data);
-      } else if (typeof res.data === 'object' && res.data !== null) {
-        // If API returns an object with a data property
-        if (Array.isArray(res.data.data)) {
-          setNews(res.data.data);
-          console.log("Extracted news from res.data.data, found", res.data.data.length, "items");
-        } else {
-          // If we have an object but it's not in expected format
-          console.warn("Response is not an array or doesn't contain array at .data property:", res.data);
-          setNews([]);
-        }
+      const data = res.data;
+
+      if (Array.isArray(data)) {
+        setNews(data);
+      } else if (Array.isArray(data.data)) {
+        setNews(data.data);
       } else {
-        console.warn("Unexpected response format:", res.data);
         setNews([]);
       }
     } catch (error) {
-      console.error("Error object:", error);
-      if (error.response) {
-        console.error("Response error data:", error.response.data);
-        console.error("Response error status:", error.response.status);
-      } else if (error.request) {
-        console.error("No response received:", error.request);
-      } else {
-        console.error("Error setting up request:", error.message);
-      }
-      setError("Failed to fetch news. Please check console for details.");
+      setError("Failed to fetch news.");
+      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -81,7 +241,6 @@ export default function NewsViewer() {
       setSuccessMessage("New image selected");
       setError(null);
 
-      // Create preview URL
       const reader = new FileReader();
       reader.onloadend = () => {
         setPreviewUrl(reader.result);
@@ -99,22 +258,30 @@ export default function NewsViewer() {
       url: item.url || "",
       photo: null
     });
-    setPreviewUrl(item.photo ? `https://inshorts-backend-xce7.onrender.com${item.photo}` : null);
+
+    // 🛠 Handle full Cloudinary or relative image
+    let photoUrl = '';
+    if (item.photo?.startsWith("http")) {
+      photoUrl = item.photo;
+    } else {
+      photoUrl = `https://inshorts-backend-xce7.onrender.com${item.photo}`;
+    }
+
+    setPreviewUrl(photoUrl || null);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this news article?")) return;
-    
+
     try {
       setLoading(true);
-      const response = await axios.delete(`${API_URL}/${id}`);
-      console.log(response.data.message);
+      await axios.delete(`${API_URL}/${id}`);
       setSuccessMessage("News deleted successfully!");
       fetchNews();
     } catch (error) {
-      setError("Failed to delete news. Please try again.");
-      console.error("Error deleting news:", error);
+      setError("Failed to delete news.");
+      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -127,8 +294,6 @@ export default function NewsViewer() {
     setSuccessMessage(null);
 
     const form = new FormData();
-    
-    // Add all form fields to FormData
     for (const key in formData) {
       if (formData[key] !== null) {
         form.append(key, formData[key]);
@@ -136,27 +301,17 @@ export default function NewsViewer() {
     }
 
     try {
-      // Update existing news
       const response = await axios.put(`${API_URL}/${editingId}`, form, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       });
-      
-      console.log("Update response:", response.data);
       setSuccessMessage("News updated successfully!");
-      
-      // Refresh the news list
       await fetchNews();
-      
-      // Reset form
       handleCancel();
     } catch (error) {
-      setError("Failed to update news. Please try again.");
-      console.error("Error updating news:", error);
-      if (error.response) {
-        console.error("Server response:", error.response.data);
-      }
+      setError("Failed to update news.");
+      console.error(error);
     } finally {
       setLoading(false);
     }
