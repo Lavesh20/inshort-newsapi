@@ -559,7 +559,7 @@ const News = () => {
                           },
                           isCustom: true
                         };
-                      });
+                      });[]
                     // If custom-only category, only use custom articles
                     if (isCustomOnlyCategory) {
                         finalArticles = formattedCustomArticles;
